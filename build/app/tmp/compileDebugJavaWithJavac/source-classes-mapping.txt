@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/example/cook_kuy/BuildConfig.java
+ com.example.cook_kuy.BuildConfig

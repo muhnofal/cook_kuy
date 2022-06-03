@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">545164606303-4sqlr6bc4sr1pqabkjur36mpfu4a1k11.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">545164606303</string>
+    <string name="google_api_key" translatable="false">AIzaSyCgz6FMUoA-shsTfa0YtX5W0NDdLNGnPlA</string>
+    <string name="google_app_id" translatable="false">1:545164606303:android:6bf39883a3141dfa4314ea</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCgz6FMUoA-shsTfa0YtX5W0NDdLNGnPlA</string>
+    <string name="google_storage_bucket" translatable="false">cook-kuy-53f5f.appspot.com</string>
+    <string name="project_id" translatable="false">cook-kuy-53f5f</string>
+</resources>
