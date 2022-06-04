@@ -1,6 +1,6 @@
 import 'package:cook_kuy/model/user.dart';
 import 'package:cook_kuy/resources/auth_methods.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class UserProvider with ChangeNotifier{
   User? _user;

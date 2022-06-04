@@ -23,7 +23,7 @@ class AuthMethods {
       {required String email,
       required String password,
       required String username,
-      required Uint8List file}) async {
+      required String imageFile}) async {
     String res = "Some error occured";
     try {
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
@@ -33,8 +33,8 @@ class AuthMethods {
 
         print('ini creadential ${credential.user!.uid}');
 
-        String photoUrl = await StorageMethods()
-            .uploadImageToStorage('profilePics', file, false);
+        // String photoUrl = await StorageMethods()
+        //     .uploadImageToStorage('profilePics', file, false);
         //add user to our database
 
         model.User user = model.User(
@@ -43,7 +43,7 @@ class AuthMethods {
             email: email,
             followers: [],
             following: [],
-            photoUrl: photoUrl);
+            photoUrl: imageFile);
 
         await _firestore.collection('users').doc(credential.user!.uid).set(
               user.toJson(),

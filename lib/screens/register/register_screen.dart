@@ -24,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   Uint8List? _image;
   bool _isLoading = false;
+  final imageDefault = 'https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg';
 
   @override
   void dispose() {
@@ -48,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: _emaiController.text,
         password: _passwordController.text,
         username: _usernameController.text,
-        file: _image!);
+        imageFile: imageDefault);
 
     setState(() {
       _isLoading = false;
