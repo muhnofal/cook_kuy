@@ -1,5 +1,6 @@
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
+import 'package:cook_kuy/screens/home/home_screen.dart';
 import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
 
   List<Widget> _buildScreen() {
     return [
+      const HomeScreen(),
       const CookScreen(),
       const CreateRecipeScreen(),
     ];
@@ -24,6 +26,17 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
 
   List<PersistentBottomNavBarItem> _navBarsItem() {
     return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.home_rounded),
+        title: ('Home'),
+        activeColorPrimary: ijoSkripsi,
+        inactiveColorPrimary: kuningSkripsi,
+        routeAndNavigatorSettings: const RouteAndNavigatorSettings(
+          initialRoute: AppRouter.home,
+          onGenerateRoute: AppRouter.generateRoute,
+        ),
+        //ini masih ada yang harus ditambahkan
+      ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.soup_kitchen_outlined),
         title: ('Cook'),
