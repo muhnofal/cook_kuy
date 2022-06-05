@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 4,
-          elevation: 1,
+          elevation: 0,
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
@@ -31,13 +31,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           title: const Text(
-            "Hi, Ravy Aryo Pratama",
+            "Hi, RavyAryo",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,
               color: Colors.black,
             ),
           ),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.search,
+                color: ijoSkripsi,
+              ),
+            )
+          ],
           backgroundColor: Colors.white,
         ),
         body: ListView(

@@ -1,3 +1,4 @@
+import 'package:cook_kuy/screens/account/account_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
 import 'package:cook_kuy/screens/home/home_screen.dart';
@@ -21,6 +22,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       const HomeScreen(),
       const CookScreen(),
       const CreateRecipeScreen(),
+      const AccountScreen(),
     ];
   }
 
@@ -55,6 +57,17 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
           initialRoute: AppRouter.createRecipe,
+          onGenerateRoute: AppRouter.generateRoute,
+        ),
+        //ini masih ada yang harus ditambahkan
+      ),
+       PersistentBottomNavBarItem(
+        icon: const Icon(Icons.person_outline_rounded),
+        title: ('Account'),
+        activeColorPrimary: ijoSkripsi,
+        inactiveColorPrimary: kuningSkripsi,
+        routeAndNavigatorSettings: const RouteAndNavigatorSettings(
+          initialRoute: AppRouter.account,
           onGenerateRoute: AppRouter.generateRoute,
         ),
         //ini masih ada yang harus ditambahkan
