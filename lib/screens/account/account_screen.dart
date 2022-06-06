@@ -51,8 +51,7 @@ class _AccountScreenState extends State<AccountScreen> {
             CustomScrollView(
               physics: const ClampingScrollPhysics(),
               slivers: [
-                SliverGrid(
-                  
+                SliverGrid( 
                     delegate: SliverChildBuilderDelegate((context, index) {
                       return Container(
                         decoration: BoxDecoration(
