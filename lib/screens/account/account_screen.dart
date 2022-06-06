@@ -7,8 +7,6 @@ import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -71,7 +69,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: CircularProgressIndicator(color: ijoSkripsi),
                     );
                   }
-                  return snapshot.data!.docs.isEmpty
+                  return snapshot.data!.docs == null
                       ? Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
