@@ -15,6 +15,7 @@ class FirestoreMethods {
       Uint8List image,
       double rating,
       List<Map<String, dynamic>> step,
+      List<String> favorite,
       String uid) async {
     String res = "Some error occurred";
     try {
@@ -32,14 +33,6 @@ class FirestoreMethods {
       List<String> imagesUrl = await StorageMethods()
           .uploadMultiImageToStorage('recipeStepByStep', stepImageUrl, true);
 
-      // for (var list in step) {
-      //   // for (var imageUrl in imagesUrl) {
-      //   //   list['image'] = imageUrl;
-      //   //   print("ini image url: $imageUrl");
-      //   // }
-      //   list['image'] = imagesUrl;
-      // }
-
       for (var i = 0; i < step.length; i++) {
         step[i]['image'] = imagesUrl[i];
         stepByStepConvert.add(step[i]);
@@ -54,7 +47,10 @@ class FirestoreMethods {
           mainIngre: mainIngre,
           additionalIngre: additionalIngre,
           rating: rating,
-          step: stepByStepConvert);
+          step: stepByStepConvert,
+          datePublished: DateTime.now(),
+          favorite: favorite
+          );
       _firestore.collection('recipe').doc(recipeId).set(recipe.toJson());
       res = "success";
     } catch (e) {
@@ -114,6 +110,29 @@ class FirestoreMethods {
       }
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void>  addFavorite(
+      String recipeId, String uid, List favorite) async {
+    try {
+      if (favorite.contains(uid)) {
+        await _firestore
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          'favorite': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        await _firestore
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          'favorite': FieldValue.arrayUnion([uid])
+        });
+      }
+    } catch (e) {
+       print(e.toString());
     }
   }
 }

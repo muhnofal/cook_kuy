@@ -10,11 +10,11 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-
   Future<model.User> getUserDetail() async {
     User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(snap);
   }
@@ -38,12 +38,14 @@ class AuthMethods {
         //add user to our database
 
         model.User user = model.User(
-            username: username,
-            uid: credential.user!.uid,
-            email: email,
-            followers: [],
-            following: [],
-            photoUrl: imageFile);
+          username: username,
+          uid: credential.user!.uid,
+          email: email,
+          followers: [],
+          following: [],
+          photoUrl: imageFile,
+          bio: "My favorite ingredients is egg :)"
+        );
 
         await _firestore.collection('users').doc(credential.user!.uid).set(
               user.toJson(),
