@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                   child: Text('${snapsnot.error}'),
                 );
               }
-            } 
+            }
             if (snapsnot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(
