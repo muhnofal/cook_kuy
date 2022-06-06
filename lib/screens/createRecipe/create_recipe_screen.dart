@@ -427,14 +427,14 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
           title: const Text(
             "Write a recipe",
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+                fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black),
           ),
           backgroundColor: Colors.white,
         ),
         body: ListView(
           children: [
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Form(
               child: Column(

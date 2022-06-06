@@ -1,3 +1,4 @@
+import 'package:cook_kuy/screens/account/account_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
@@ -24,6 +25,8 @@ class AppRouter {
     switch (routeSettings.name) {
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case account:
+        return MaterialPageRoute(builder: (_) => const AccountScreen());
       case cook:
         return MaterialPageRoute(builder: (_) => const CookScreen());
       case login:
