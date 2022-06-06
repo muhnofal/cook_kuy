@@ -284,7 +284,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        step[index]['step'].toString(),
+                        step[index]['description'].toString(),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       )
