@@ -39,7 +39,8 @@ class _CookScreenState extends State<CookScreen> {
           return Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -80,6 +81,7 @@ class _CookScreenState extends State<CookScreen> {
                         ),
                         child: TextField(
                           controller: controller,
+                          autofocus: false,
                           decoration: InputDecoration(
                             // filled: true,
                             // fillColor: const Color.fromARGB(255, 238, 238, 238),
@@ -176,9 +178,17 @@ class _CookScreenState extends State<CookScreen> {
                                         shape: const StadiumBorder(),
                                         primary: ijoSkripsi),
                                     onPressed: () {
-                                      Navigator.of(context, rootNavigator: false)
+                                      Navigator.of(context,
+                                              rootNavigator: false)
                                           .pushNamed(AppRouter.additionalIngre,
                                               arguments: selectedIngredient);
+                                      setState(() {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        controller.clear();
+                                        ingredientName = "";
+                                        selectedIngredient = "";
+                                      });
                                     },
                                     child: const Text("Next step"))),
                           )
