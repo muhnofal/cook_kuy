@@ -1,4 +1,5 @@
 import 'package:cook_kuy/screens/account/account_screen.dart';
+import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
 import 'package:cook_kuy/screens/home/home_screen.dart';
@@ -31,6 +32,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home_rounded),
         title: ('Home'),
+        textStyle: TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -42,6 +44,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.soup_kitchen_outlined),
         title: ('Cook'),
+        textStyle: TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -53,6 +56,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.receipt_long_outlined),
         title: ('Create Recipe'),
+        textStyle: TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -61,9 +65,10 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
         ),
         //ini masih ada yang harus ditambahkan
       ),
-       PersistentBottomNavBarItem(
+      PersistentBottomNavBarItem(
         icon: const Icon(Icons.person_outline_rounded),
         title: ('Account'),
+        textStyle: TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
