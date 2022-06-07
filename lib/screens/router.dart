@@ -1,4 +1,5 @@
 import 'package:cook_kuy/screens/account/account_screen.dart';
+import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const createRecipe = '/create_recipe';
   static const cook = '/cook';
   static const account = '/account';
+  static const accountLain = '/accountlain';
   static const searchResult = '/search_result';
   static const additionalIngre = '/search_result/additional_ingre';
   static const recipeDetail = '/search_result/recipe_detail';
@@ -27,6 +29,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case account:
         return MaterialPageRoute(builder: (_) => const AccountScreen());
+      case accountLain:
+        return MaterialPageRoute(builder: (_) => const AccountLain());
       case cook:
         return MaterialPageRoute(builder: (_) => const CookScreen());
       case login:
