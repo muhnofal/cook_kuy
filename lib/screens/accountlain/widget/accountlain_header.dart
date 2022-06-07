@@ -10,24 +10,25 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class AccountHeaderLain extends StatefulWidget {
   final anotherUserId;
-  const AccountHeaderLain({Key? key,required this.anotherUserId}) : super(key: key);
+  const AccountHeaderLain({Key? key, required this.anotherUserId})
+      : super(key: key);
 
   @override
   State<AccountHeaderLain> createState() => _AccountHeaderLainState();
 }
 
 class _AccountHeaderLainState extends State<AccountHeaderLain> {
-
   var userData = {};
 
   getanotherUserData() async {
     try {
-      var userSnap = await FirebaseFirestore.instance.collection('users').doc(widget.anotherUserId).get();
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.anotherUserId)
+          .get();
 
       userData = userSnap.data()!;
-
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   @override
@@ -44,22 +45,34 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("assets/images/person.png"),
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 14.0),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage("assets/images/person.png"),
+                ),
               ),
-              FollowAndFollowingWidget(
-                count: "10",
-                labeltext: "Recipe",
-              ),
-              FollowAndFollowingWidget(
-                count: "360",
-                labeltext: "Followers",
-              ),
-              FollowAndFollowingWidget(
-                count: "240",
-                labeltext: "Following",
+              Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 45.0),
+                    child: FollowAndFollowingWidget(
+                      count: "360",
+                      labeltext: "Followers",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 45.0),
+                    child: FollowAndFollowingWidget(
+                      count: "240",
+                      labeltext: "Following",
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -90,8 +103,10 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: (){
-                      FirestoreMethods().followUser(FirebaseAuth.instance.currentUser!.uid, userData['uid']);
+                    onTap: () {
+                      FirestoreMethods().followUser(
+                          FirebaseAuth.instance.currentUser!.uid,
+                          userData['uid']);
                     },
                     child: Container(
                       alignment: Alignment.center,

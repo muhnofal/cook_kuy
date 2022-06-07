@@ -28,19 +28,35 @@ class _AccountHeaderState extends State<AccountHeader> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(widget.userProfilePict),
+            Padding(
+              padding: const EdgeInsets.only(left: 14.0),
+              child: CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(widget.userProfilePict),
+              ),
             ),
-            FollowAndFollowingWidget(
-              count: widget.followers.length.toString(),
-              labeltext: "Followers",
-            ),
-            FollowAndFollowingWidget(
-              count: widget.following.length.toString(),
-              labeltext: "Following",
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 45.0),
+                  child: FollowAndFollowingWidget(
+                    count: widget.followers.length.toString(),
+                    labeltext: "Followers",
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 45.0),
+                  child: FollowAndFollowingWidget(
+                    count: widget.following.length.toString(),
+                    labeltext: "Following",
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -54,9 +70,9 @@ class _AccountHeaderState extends State<AccountHeader> {
             children: [
               Text(
                 widget.username,
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
-              Text(
+              const Text(
                 "My favorite ingredients is egg",
               ),
             ],
