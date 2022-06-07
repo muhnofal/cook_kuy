@@ -5,7 +5,17 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AccountHeader extends StatefulWidget {
-  const AccountHeader({Key? key}) : super(key: key);
+  final String userProfilePict;
+  final String username;
+  final List followers;
+  final List following;
+  const AccountHeader(
+      {Key? key,
+      required this.username,
+      required this.userProfilePict,
+      required this.followers,
+      required this.following})
+      : super(key: key);
 
   @override
   State<AccountHeader> createState() => _AccountHeaderState();
@@ -19,21 +29,17 @@ class _AccountHeaderState extends State<AccountHeader> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
+          children: [
             CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage("assets/images/person.png"),
+              backgroundImage: NetworkImage(widget.userProfilePict),
             ),
             FollowAndFollowingWidget(
-              count: "10",
-              labeltext: "Recipe",
-            ),
-            FollowAndFollowingWidget(
-              count: "360",
+              count: widget.followers.length.toString(),
               labeltext: "Followers",
             ),
             FollowAndFollowingWidget(
-              count: "240",
+              count: widget.following.length.toString(),
               labeltext: "Following",
             ),
           ],
@@ -45,9 +51,9 @@ class _AccountHeaderState extends State<AccountHeader> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "RavyAryo",
+                widget.username,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               Text(

@@ -5,6 +5,7 @@ import 'package:cook_kuy/resources/firestore_methods.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
@@ -17,20 +18,6 @@ class RecipeDetailScreen extends StatefulWidget {
 }
 
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
-  String imageTemp =
-      'https://firebasestorage.googleapis.com/v0/b/cook-kuy-53f5f.appspot.com/o/temp%2Ftelur%20rebus%20balado.png?alt=media&token=504da76d-b983-45e3-8c0e-89628d8e29c6';
-  String imageTemp2 =
-      "https://firebasestorage.googleapis.com/v0/b/cook-kuy-53f5f.appspot.com/o/profilePics%2FU3zkeCfTJcZwOPZuGaQ20EN9Ppq2?alt=media&token=f16b0716-f231-4c4e-ab0c-07f6f5f7881b";
-  String imageTemp3 =
-      "https://firebasestorage.googleapis.com/v0/b/cook-kuy-53f5f.appspot.com/o/temp%2Frebus%20telur.png?alt=media&token=61f428c0-f9b7-4a8e-87d7-6475708310c2";
-  List ingredientsTemp = [
-    'telur',
-    'cabai',
-    'bawang merah',
-    'bawang putih',
-    'bawang putih',
-    'bawang putih'
-  ];
   final TextEditingController _commentController = TextEditingController();
   var userData = {};
 
@@ -61,7 +48,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Telur Rebus Balado"),
+          title: Text(snapshot['name']),
           centerTitle: true,
           titleTextStyle: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
@@ -107,7 +94,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             .collection('comments')
             .orderBy('date_published', descending: true)
             .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -127,7 +115,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(commentData['profile_pic']),
+                        backgroundImage:
+                            NetworkImage(commentData['profile_pic']),
                       ),
                       const SizedBox(
                         width: 10,
@@ -138,10 +127,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                           children: [
                             Text(
                               commentData['name'].toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                                commentData['text']),
+                            Text(commentData['text']),
                             const SizedBox(
                               height: 5,
                             ),
@@ -149,11 +138,17 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                               children: [
                                 InkWell(
                                     onTap: () async {
-                                      await FirestoreMethods().likeComment(widget.snap['recipe_id'], commentData['comment_id'], commentData['uid'], commentData['likes']);
+                                      await FirestoreMethods().likeComment(
+                                          widget.snap['recipe_id'],
+                                          commentData['comment_id'],
+                                          commentData['uid'],
+                                          commentData['likes']);
                                     },
                                     child: Icon(
                                       Icons.thumb_up,
-                                      color: likesCounter.contains(user.uid) ? ijoSkripsi : Colors.grey,
+                                      color: likesCounter.contains(user.uid)
+                                          ? ijoSkripsi
+                                          : Colors.grey,
                                     )),
                                 const SizedBox(
                                   width: 5,
@@ -388,90 +383,121 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
 
   Widget introduce(final snap) {
     final List step = snap['step'];
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(userData['photoUrl']),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "26 April 2022",
-                    style: TextStyle(color: abuSkripsi),
-                  ),
-                  Text(userData['username']),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            snap['name'],
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star,
-                    color: kuningSkripsi,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(snap['rating'].toString())
-                ],
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/images/step_icon.png',
-                    width: 22,
-                    height: 22,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(("${step.length} step"))
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ReadMoreText(
-            snap['description'],
-            trimLines: 2,
-            trimMode: TrimMode.Line,
-            trimCollapsedText: 'Read More',
-            trimExpandedText: 'Read Less',
-            style: const TextStyle(color: Colors.black),
-            lessStyle: const TextStyle(color: ijoSkripsi),
-            moreStyle: const TextStyle(color: ijoSkripsi),
-          )
-        ],
-      ),
-    );
+    Timestamp date = snap['date_published'];
+    DateTime dateTime = date.toDate();
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
+    return StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(widget.snap['recipe_id'])
+            .snapshots(),
+        builder: (context, snapshot) {
+          var recipeDoc = snapshot.data;
+
+          List favoriteList = recipeDoc!.get('favorite');
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(userData['photoUrl']),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat('dd MMMM yyyy').format(dateTime),
+                            style: const TextStyle(color: abuSkripsi),
+                          ),
+                          Text(userData['username']),
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () async {
+                        await FirestoreMethods().addFavorite(
+                            widget.snap['recipe_id'],
+                            userProvider.getUser.uid,
+                            favoriteList);
+                      },
+                      child: Icon(Icons.favorite,
+                          size: 45,
+                          color: favoriteList.contains(userProvider.getUser.uid)
+                              ? ijoSkripsi
+                              : Colors.grey[400]),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  snap['name'],
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: kuningSkripsi,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(snap['rating'].toString())
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/step_icon.png',
+                          width: 22,
+                          height: 22,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(("${step.length} step"))
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ReadMoreText(
+                  snap['description'],
+                  trimLines: 2,
+                  trimMode: TrimMode.Line,
+                  trimCollapsedText: 'Read More',
+                  trimExpandedText: 'Read Less',
+                  style: const TextStyle(color: Colors.black),
+                  lessStyle: const TextStyle(color: ijoSkripsi),
+                  moreStyle: const TextStyle(color: ijoSkripsi),
+                )
+              ],
+            ),
+          );
+        });
   }
 
   void showCommentField() => showModalBottomSheet(
@@ -513,8 +539,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       _commentController.text,
                       user.uid,
                       user.username,
-                      user.photoUrl,
-                      []);
+                      user.photoUrl, []);
                   _commentController.clear();
                   Navigator.pop(context);
                 },

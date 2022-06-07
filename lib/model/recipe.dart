@@ -10,6 +10,8 @@ class Recipe {
   final List<String> additionalIngre;
   final List<Map<String, dynamic>> step;
   final String uid;
+  final DateTime datePublished;
+  final List<String> favorite;
 
   Recipe({
     required this.name,
@@ -20,7 +22,9 @@ class Recipe {
     required this.recipeId,
     required this.additionalIngre,
     required this.step,
-    required this.uid
+    required this.uid,
+    required this.datePublished,
+    required this.favorite
   });
 
   static Recipe fromSnap(DocumentSnapshot snap) {
@@ -35,7 +39,9 @@ class Recipe {
       step: snapshot['step'],
       mainIngre: snapshot['main_ingredient'],
       additionalIngre: snapshot['ingredients'],
-      uid: snapshot['uid']
+      uid: snapshot['uid'],
+      datePublished: snapshot['date_published'],
+      favorite: snapshot['favorite']
     );
   }
 
@@ -49,5 +55,7 @@ class Recipe {
     "recipe_id": recipeId,
     "step": step,
     "uid": uid,
+    "date_published": datePublished,
+    "favorite": favorite
   };
 }

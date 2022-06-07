@@ -63,128 +63,130 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 60,
-              ),
-              Image.asset(
-                'assets/images/cook_kuy_logo.png',
-                width: 200,
-                height: 200,
-              ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey[300]!,
-                        offset: const Offset(
-                          3.0,
-                          6.0,
-                        ), //Offset
-                        blurRadius: 8.0,
-                        // spreadRadius: 1.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  controller: _emaiController,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 60,
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey[300]!,
-                        offset: const Offset(
-                          3.0,
-                          6.0,
-                        ), //Offset
-                        blurRadius: 8.0,
-                        // spreadRadius: 1.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    // filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  controller: _passwordController,
-                  obscureText: true,
+                Image.asset(
+                  'assets/images/cook_kuy_logo.png',
+                  width: 200,
+                  height: 200,
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    primary: ijoSkripsi,
-                  ),
-                  onPressed: loginUser,
-                  child: _isloading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Text(
-                          "LOGIN",
-                          style: TextStyle(color: Colors.white),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[300]!,
+                          offset: const Offset(
+                            3.0,
+                            6.0,
+                          ), //Offset
+                          blurRadius: 8.0,
+                          // spreadRadius: 1.0,
                         ),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have account?"),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  InkWell(
-                    onTap: navigateToRegister,
-                    child: const Text(
-                      "create a new account",
-                      style: TextStyle(color: ijoSkripsi),
+                      ],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
                     ),
-                  )
-                ],
-              )
-            ],
+                    controller: _emaiController,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[300]!,
+                          offset: const Offset(
+                            3.0,
+                            6.0,
+                          ), //Offset
+                          blurRadius: 8.0,
+                          // spreadRadius: 1.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      // filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    controller: _passwordController,
+                    obscureText: true,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      primary: ijoSkripsi,
+                    ),
+                    onPressed: loginUser,
+                    child: _isloading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text(
+                            "LOGIN",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have account?"),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    InkWell(
+                      onTap: navigateToRegister,
+                      child: const Text(
+                        "create a new account",
+                        style: TextStyle(color: ijoSkripsi),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

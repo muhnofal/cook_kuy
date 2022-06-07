@@ -341,7 +341,8 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
           _recipePhoto!,
           0,
           stepBystepList,
-          uid);
+          [],
+          uid,);
       if (res == "success") {
         setState(() {
           isLoading = false;
