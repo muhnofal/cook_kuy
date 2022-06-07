@@ -1,4 +1,5 @@
 import 'package:cook_kuy/screens/account/account_screen.dart';
+import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
@@ -16,9 +17,10 @@ class AppRouter {
   static const createRecipe = '/create_recipe';
   static const cook = '/cook';
   static const account = '/account';
-  static const searchResult = '/search_result';
-  static const additionalIngre = '/search_result/additional_ingre';
-  static const recipeDetail = '/search_result/recipe_detail';
+  static const additionalIngre = '/additional_ingre';
+  static const searchResult = 'additional_ingre/search_result';
+  static const recipeDetail = '/recipe_detail';
+  static const anotherAccount = '/another_account';
 
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -44,6 +46,9 @@ class AppRouter {
       case recipeDetail:
       var args = routeSettings.arguments as dynamic;
         return MaterialPageRoute(builder: (_) => RecipeDetailScreen(snap: args,));
+      case anotherAccount:
+      var args = routeSettings.arguments as String;
+        return MaterialPageRoute(builder: (_) => AccountLain(anotherUserId: args,));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

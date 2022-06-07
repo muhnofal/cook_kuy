@@ -47,8 +47,8 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
               return Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -131,9 +131,10 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
                           child: ListView.builder(
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
-                              final ingredients = snapshot.data!.docs[index].data();
-                              final isSelected =
-                                  selectedIngredient.contains(ingredients['name']);
+                              final ingredients =
+                                  snapshot.data!.docs[index].data();
+                              final isSelected = selectedIngredient
+                                  .contains(ingredients['name']);
                               return InkWell(
                                 onTap: () {
                                   setState(() {
@@ -161,7 +162,8 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     SizedBox(
                                         height: 45,
@@ -173,14 +175,24 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
                                             onPressed: () {
                                               Navigator.of(context,
                                                       rootNavigator: false)
-                                                  .pushNamed(AppRouter.searchResult,
+                                                  .pushNamed(
+                                                      AppRouter.searchResult,
                                                       arguments: CompleteIngre(
                                                           mainIngre:
                                                               widget.mainIngre,
                                                           additionalIngre:
                                                               selectedIngredient));
+                                              setState(() {
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                                controller.clear();
+                                                ingredientName = "";
+                                                selectedIngredient.clear();
+                                              });
                                             },
-                                            child: const Text("Search Recipe"))),
+                                            child:
+                                                const Text("Search Recipe"))),
                                     SizedBox(
                                       height: 45,
                                       width: 150,
@@ -191,8 +203,8 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
                                           onPressed: () {},
                                           child: Text(
                                             "${selectedIngredient.length} ingredients",
-                                            style:
-                                                const TextStyle(color: Colors.grey),
+                                            style: const TextStyle(
+                                                color: Colors.grey),
                                           )),
                                     )
                                   ],
@@ -204,7 +216,15 @@ class _AdditionalIngreScreenState extends State<AdditionalIngreScreen> {
                                       .pushNamed(AppRouter.searchResult,
                                           arguments: CompleteIngre(
                                               mainIngre: widget.mainIngre,
-                                              additionalIngre: selectedIngredient));
+                                              additionalIngre:
+                                                  selectedIngredient));
+                                  setState(() {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    controller.clear();
+                                    ingredientName = "";
+                                    selectedIngredient.clear();
+                                  });
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.only(top: 20),

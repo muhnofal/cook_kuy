@@ -49,8 +49,7 @@ class FirestoreMethods {
           rating: rating,
           step: stepByStepConvert,
           datePublished: DateTime.now(),
-          favorite: favorite
-          );
+          favorite: favorite);
       _firestore.collection('recipe').doc(recipeId).set(recipe.toJson());
       res = "success";
     } catch (e) {
@@ -113,26 +112,55 @@ class FirestoreMethods {
     }
   }
 
-  Future<void>  addFavorite(
-      String recipeId, String uid, List favorite) async {
+  Future<void> addFavorite(String recipeId, String uid, List favorite) async {
     try {
       if (favorite.contains(uid)) {
-        await _firestore
-            .collection('recipe')
-            .doc(recipeId)
-            .update({
+        await _firestore.collection('recipe').doc(recipeId).update({
           'favorite': FieldValue.arrayRemove([uid])
         });
       } else {
-        await _firestore
-            .collection('recipe')
-            .doc(recipeId)
-            .update({
+        await _firestore.collection('recipe').doc(recipeId).update({
           'favorite': FieldValue.arrayUnion([uid])
         });
       }
     } catch (e) {
-       print(e.toString());
+      print(e.toString());
     }
+  }
+
+  Future<void> followUser(String uid, String anotherUserId) async {
+    try {
+      DocumentSnapshot snap =
+          await _firestore.collection('users').doc(uid).get();
+      // List following = (snap.data()! as dynamic)['following'];
+
+      List following = (snap.data() as dynamic)['following'];
+
+      if (following.contains(anotherUserId)) {
+        _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayRemove([anotherUserId])
+        });
+        _firestore.collection('users').doc(anotherUserId).update({
+          'followers': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayUnion([anotherUserId])
+        });
+        _firestore.collection('users').doc(anotherUserId).update({
+          'followers': FieldValue.arrayUnion([uid])
+        });
+      }
+      // if (following.contains(followId)) {
+      //   await _firestore.collection('users').doc(uid).update({
+      //     'followers': FieldValue.arrayRemove([uid])
+      //   });
+      //   await _firestore.collection('users').doc(uid).update({
+      //     'following': FieldValue.arrayRemove([uid])
+      //   });
+      // }else{
+
+      // }
+    } catch (e) {}
   }
 }

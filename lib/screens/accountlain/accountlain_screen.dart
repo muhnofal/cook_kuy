@@ -9,7 +9,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../utils/colors.dart';
 
 class AccountLain extends StatefulWidget {
-  const AccountLain({Key? key}) : super(key: key);
+  final String anotherUserId;
+  const AccountLain({Key? key, required this.anotherUserId}) : super(key: key);
 
   @override
   State<AccountLain> createState() => _AccountLainState();
@@ -24,46 +25,50 @@ class _AccountLainState extends State<AccountLain> {
         headerSliverBuilder: (context, index) {
           return [
             const AppbarAccountLain(),
-            const SliverToBoxAdapter(
-              child: AccountHeaderLain(),
+            SliverToBoxAdapter(
+              child: AccountHeaderLain(anotherUserId: widget.anotherUserId),
             ),
             SliverPersistentHeader(
               pinned: true,
               delegate: PersistentHeader(
-                child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child:  Text(
-                    "Resep User",
-                    style:  TextStyle(fontWeight: FontWeight.bold),
+                child: const Material(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    child:  Text(
+                      "Resep User",
+                      style:  TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
             )
           ];
         },
-        body: TabBarView(
-          children: [
-            CustomScrollView(
-              physics: const ClampingScrollPhysics(),
-              slivers: [
-                SliverGrid(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                'https://picsum.photos/id/${index + 1068}/500/500'),
+        body: Material(
+          child: TabBarView(
+            children: [
+              CustomScrollView(
+                physics: const ClampingScrollPhysics(),
+                slivers: [
+                  SliverGrid(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  'https://picsum.photos/id/${index + 1068}/500/500'),
+                            ),
                           ),
-                        ),
-                      );
-                    }, childCount: 17),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3))
-              ],
-            ),
-          ],
+                        );
+                      }, childCount: 17),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3))
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

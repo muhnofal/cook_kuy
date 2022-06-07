@@ -69,7 +69,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: CircularProgressIndicator(color: ijoSkripsi),
                     );
                   }
-                  return snapshot.data!.docs.length == 00
+                  return snapshot.data!.docs.length == 0
                       ? Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

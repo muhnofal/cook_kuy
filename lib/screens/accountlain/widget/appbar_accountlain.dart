@@ -18,7 +18,7 @@ class _AppbarAccountLainState extends State<AppbarAccountLain> {
       backgroundColor: Colors.white,
       centerTitle: true,
       title: Text(
-        "Account",
+        "Bambang",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 14,

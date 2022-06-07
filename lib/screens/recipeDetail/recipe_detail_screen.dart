@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/model/user.dart';
 import 'package:cook_kuy/providers/user_provider.dart';
 import 'package:cook_kuy/resources/firestore_methods.dart';
+import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -403,9 +404,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(userData['photoUrl']),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true)
+                            .pushNamed(AppRouter.anotherAccount, arguments: userData['uid']);
+                      },
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(userData['photoUrl']),
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -418,7 +425,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             DateFormat('dd MMMM yyyy').format(dateTime),
                             style: const TextStyle(color: abuSkripsi),
                           ),
-                          Text(userData['username']),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(AppRouter.anotherAccount);
+                            },
+                            child: Text(
+                              userData['username'],
+                            ),
+                          ),
                         ],
                       ),
                     ),
