@@ -7,12 +7,14 @@ import 'package:flutter/src/widgets/framework.dart';
 class AccountHeader extends StatefulWidget {
   final String userProfilePict;
   final String username;
+  final String bio;
   final List followers;
   final List following;
   const AccountHeader(
       {Key? key,
       required this.username,
       required this.userProfilePict,
+      required this.bio,
       required this.followers,
       required this.following})
       : super(key: key);
@@ -72,8 +74,8 @@ class _AccountHeaderState extends State<AccountHeader> {
                 widget.username,
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
-              const Text(
-                "My favorite ingredients is egg",
+              Text(
+                widget.bio,
               ),
             ],
           ),

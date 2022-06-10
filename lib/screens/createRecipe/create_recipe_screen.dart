@@ -368,6 +368,7 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
       mainIngreController.clear();
       _additionalIngreListcontroller.clear();
       allStep.clear();
+      additioalIngreController.clear();
       _recipePhoto = null;
     });
   }

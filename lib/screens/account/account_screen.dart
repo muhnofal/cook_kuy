@@ -30,8 +30,9 @@ class _AccountScreenState extends State<AccountScreen> {
               child: AccountHeader(
                 username: userProvider.getUser.username,
                 userProfilePict: userProvider.getUser.photoUrl,
+                bio: userProvider.getUser.bio,
                 followers: userProvider.getUser.followers,
-                following: userProvider.getUser.following,
+                following: userProvider.getUser.following
               ),
             ),
             SliverPersistentHeader(

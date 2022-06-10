@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/screens/account/widget/persistent_header.dart';
 import 'package:cook_kuy/screens/accountlain/widget/accountlain_header.dart';
 import 'package:cook_kuy/screens/accountlain/widget/appbar_accountlain.dart';
+import 'package:cook_kuy/screens/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -33,11 +35,10 @@ class _AccountLainState extends State<AccountLain> {
               delegate: PersistentHeader(
                 child: const Material(
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    child:  Text(
-                      "Resep User",
-                      style:  TextStyle(fontWeight: FontWeight.bold),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    child: Text(
+                      "User Recipe",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -48,25 +49,69 @@ class _AccountLainState extends State<AccountLain> {
         body: Material(
           child: TabBarView(
             children: [
-              CustomScrollView(
-                physics: const ClampingScrollPhysics(),
-                slivers: [
-                  SliverGrid(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://picsum.photos/id/${index + 1068}/500/500'),
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('recipe')
+                      .where('uid', isEqualTo: widget.anotherUserId)
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: ijoSkripsi),
+                      );
+                    }
+                    return snapshot.data!.docs.length == 0
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.soup_kitchen_rounded,
+                                  size: 100,
+                                  color: Colors.grey[400],
+                                ),
+                                Text(
+                                  "you haven't posted",
+                                  style: TextStyle(color: Colors.grey[400]),
+                                )
+                              ],
                             ),
-                          ),
-                        );
-                      }, childCount: 17),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3))
-                ],
-              ),
+                          )
+                        : CustomScrollView(
+                            physics: const ClampingScrollPhysics(),
+                            slivers: [
+                              SliverGrid(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      final snap =
+                                          snapshot.data!.docs[index].data();
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pushNamed(AppRouter.recipeDetail,
+                                                  arguments: snap);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                  snap['image_url']),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    childCount: snapshot.data!.docs.length,
+                                  ),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3))
+                            ],
+                          );
+                  }),
             ],
           ),
         ),

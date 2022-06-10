@@ -128,6 +128,10 @@ class FirestoreMethods {
     }
   }
 
+  Future<void> followUserNew() async {
+    
+  }
+
   Future<void> followUser(String uid, String anotherUserId) async {
     try {
       DocumentSnapshot snap =

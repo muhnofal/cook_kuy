@@ -394,6 +394,12 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             .doc(widget.snap['recipe_id'])
             .snapshots(),
         builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(color: ijoSkripsi),
+            );
+          }
+
           var recipeDoc = snapshot.data;
 
           List favoriteList = recipeDoc!.get('favorite');
@@ -406,8 +412,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true)
-                            .pushNamed(AppRouter.anotherAccount, arguments: userData['uid']);
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                            AppRouter.anotherAccount,
+                            arguments: userData['uid']);
                       },
                       child: CircleAvatar(
                         radius: 30,

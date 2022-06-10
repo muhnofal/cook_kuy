@@ -14,26 +14,19 @@ class _AppbarAccountLainState extends State<AppbarAccountLain> {
   @override
   Widget build(BuildContext context) {
     return const SliverAppBar(
+      automaticallyImplyLeading: true,
+      iconTheme: IconThemeData(color: Colors.black),
       pinned: true,
       backgroundColor: Colors.white,
       centerTitle: true,
       title: Text(
-        "Bambang",
+        "Profile",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 14,
           color: Colors.black,
         ),
       ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.settings,
-            color: ijoSkripsi,
-          ),
-        )
-      ],
     );
   }
 }
