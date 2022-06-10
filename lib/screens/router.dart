@@ -1,4 +1,5 @@
 import 'package:cook_kuy/screens/account/account_screen.dart';
+import 'package:cook_kuy/screens/account/editprofile_screen.dart';
 import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
@@ -21,7 +22,7 @@ class AppRouter {
   static const searchResult = 'additional_ingre/search_result';
   static const recipeDetail = '/recipe_detail';
   static const anotherAccount = '/another_account';
-
+  static const editProfile = '/edit_profile';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -37,6 +38,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case createRecipe:
         return MaterialPageRoute(builder: (_) => const CreateRecipeScreen());
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case additionalIngre:
       var args = routeSettings.arguments as String;
         return MaterialPageRoute(builder: (_) => AdditionalIngreScreen(mainIngre: args,));

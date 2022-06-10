@@ -1,3 +1,4 @@
+import 'package:cook_kuy/screens/account/editprofile_screen.dart';
 import 'package:cook_kuy/screens/account/widget/follow_following_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,19 +89,28 @@ class _AccountHeaderState extends State<AccountHeader> {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EditProfileScreen()),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade400),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
