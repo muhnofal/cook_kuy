@@ -96,45 +96,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   final userDoc = snapshot1.data;
                   List followingList = userDoc!.get('following');
-                  return StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('recipe')
-                        .where('uid', whereIn: followingList)
-                        .snapshots(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot2) {
-                      final postLenght = snapshot2.data!.docs.length;
-                      return postLenght == 0
-                          ? Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.people_alt,
-                                    size: 100,
-                                    color: Colors.grey[400],
-                                  ),
-                                  Text(
-                                    "there's no people you follow",
-                                    style: TextStyle(color: Colors.grey[400]),
-                                  )
-                                ],
+                  return followingList.isEmpty
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.people_alt,
+                                size: 100,
+                                color: Colors.grey[400],
                               ),
-                            )
-                        : ListView.builder(
-                            padding: const EdgeInsets.only(bottom: 20),
+                              Text(
+                                "there's no people you follow",
+                                style: TextStyle(color: Colors.grey[400]),
+                              )
+                            ],
+                          ),
+                        )
+                      : StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('recipe')
+                              .where('uid', whereIn: followingList)
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot2) {
+                            final postLenght = snapshot2.data!.docs.length;
+                            return ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 20),
                               itemCount: postLenght,
                               itemBuilder: (context, index) {
                                 final recipeSnap =
                                     snapshot2.data!.docs[index].data();
+                                    
                                 // String followingPerUser = followingList[index];
                                 return HomeFollowingCard(
                                     recipeSnap: recipeSnap);
                               },
                             );
-                    },
-                  );
+                          },
+                        );
                 },
               ),
             ),
