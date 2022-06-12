@@ -30,56 +30,65 @@ class _AccountHeaderState extends State<AccountHeader> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 14.0),
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(widget.userProfilePict),
-              ),
-            ),
-            Row(
+        Center(
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: NetworkImage(widget.userProfilePict),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 45.0),
-                  child: FollowAndFollowingWidget(
-                    count: widget.followers.length.toString(),
-                    labeltext: "Followers",
-                  ),
+                Text(
+                  widget.username,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 45.0),
-                  child: FollowAndFollowingWidget(
-                    count: widget.following.length.toString(),
-                    labeltext: "Following",
-                  ),
+                Text(
+                  widget.bio,
                 ),
               ],
             ),
-          ],
+          ),
         ),
         const SizedBox(
-          height: 5,
+          height: 10,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.username,
-                style: const TextStyle(fontWeight: FontWeight.w600),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 45.0),
+              child: FollowAndFollowingWidget(
+                count: widget.followers.length.toString(),
+                labeltext: "Followers",
               ),
-              Text(
-                widget.bio,
+            ),
+            const SizedBox(
+              width: 25,
+            ),
+            const SizedBox(
+              height: 40,
+              child: VerticalDivider(
+                color: Colors.black,
               ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              width: 25,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 45.0),
+              child: FollowAndFollowingWidget(
+                count: widget.following.length.toString(),
+                labeltext: "Following",
+              ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 10,

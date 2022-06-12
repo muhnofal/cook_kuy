@@ -67,56 +67,65 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 14.0),
-                      child: CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(userData['photoUrl']),
-                      ),
-                    ),
-                    Row(
+                Center(
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(userData['photoUrl']),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 45.0),
-                          child: FollowAndFollowingWidget(
-                            count: followers.toString(),
-                            labeltext: "Followers",
-                          ),
+                        Text(
+                          userData['username'],
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 45.0),
-                          child: FollowAndFollowingWidget(
-                            count: following.toString(),
-                            labeltext: "Following",
-                          ),
+                        Text(
+                          userData['bio'],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        userData['username'],
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 45.0),
+                      child: FollowAndFollowingWidget(
+                        count: followers.toString(),
+                        labeltext: "Followers",
                       ),
-                      Text(
-                        userData['bio'],
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    const SizedBox(
+                      height: 40,
+                      child: VerticalDivider(
+                        color: Colors.black,
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 45.0),
+                      child: FollowAndFollowingWidget(
+                        count: following.toString(),
+                        labeltext: "Following",
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

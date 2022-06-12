@@ -10,6 +10,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
+import '../router.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -70,12 +72,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                actions: const [
+                actions: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.search,
-                      color: ijoSkripsi,
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      splashColor: Colors.white,
+                      onTap: () {    Navigator.of(context, rootNavigator: true)
+                              .pushNamed(AppRouter.searchUsers);},
+                      child: Container(
+                        width: 150,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromARGB(255, 209, 209, 209)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.search,
+                                color: ijoSkripsi,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Search users",
+                                style: TextStyle(color: abuSkripsi),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   )
                 ],
@@ -128,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemBuilder: (context, index) {
                                 final recipeSnap =
                                     snapshot2.data!.docs[index].data();
-                                    
+
                                 // String followingPerUser = followingList[index];
                                 return HomeFollowingCard(
                                     recipeSnap: recipeSnap);
