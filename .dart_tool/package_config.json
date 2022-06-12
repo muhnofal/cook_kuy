@@ -51,7 +51,7 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.16.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -75,7 +75,7 @@
     },
     {
       "name": "fake_async",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -197,7 +197,7 @@
       "name": "flutter_test",
       "rootUri": "file:///D:/Flutter/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_typeahead",
@@ -209,7 +209,7 @@
       "name": "flutter_web_plugins",
       "rootUri": "file:///D:/Flutter/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "google_fonts",
@@ -267,9 +267,9 @@
     },
     {
       "name": "js",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.16"
     },
     {
       "name": "lints",
@@ -285,7 +285,7 @@
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.3",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.13"
     },
@@ -303,7 +303,7 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -411,9 +411,9 @@
     },
     {
       "name": "source_span",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.1",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "stack_trace",
@@ -441,7 +441,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.8",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -459,7 +459,7 @@
     },
     {
       "name": "vector_math",
-      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.1",
+      "rootUri": "file:///D:/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -488,7 +488,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-06-04T12:22:17.198512Z",
+  "generated": "2022-06-08T08:00:50.702293Z",
   "generator": "pub",
-  "generatorVersion": "2.16.1"
+  "generatorVersion": "2.17.1"
 }
