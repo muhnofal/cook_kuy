@@ -122,8 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             )
-                        : ListView.builder(
-                            padding: const EdgeInsets.only(bottom: 20),
+                          : ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 20),
                               itemCount: postLenght,
                               itemBuilder: (context, index) {
                                 final recipeSnap =
