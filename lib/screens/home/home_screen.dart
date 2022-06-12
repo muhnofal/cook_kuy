@@ -106,10 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 size: 100,
                                 color: Colors.grey[400],
                               ),
-<<<<<<< HEAD
-                            )
-                          : ListView.builder(
-=======
                               Text(
                                 "there's no people you follow",
                                 style: TextStyle(color: Colors.grey[400]),
@@ -127,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   snapshot2) {
                             final postLenght = snapshot2.data!.docs.length;
                             return ListView.builder(
->>>>>>> b79b3259844e9ab91848c853d7bd91644fbeeee9
                               padding: const EdgeInsets.only(bottom: 20),
                               itemCount: postLenght,
                               itemBuilder: (context, index) {
