@@ -16,7 +16,7 @@ class _SearchUsersState extends State<SearchUsers> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 20,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         centerTitle: false,
         title: Container(
@@ -36,7 +36,7 @@ class _SearchUsersState extends State<SearchUsers> {
                 ),
                 Text(
                   "Search users",
-                  style: TextStyle(color: abuSkripsi,fontSize: 12),
+                  style: TextStyle(color: abuSkripsi, fontSize: 12),
                 )
               ],
             ),
