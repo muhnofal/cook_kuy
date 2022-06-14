@@ -24,6 +24,8 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
   int following = 0;
   bool isFollowing = false;
   bool isLoading = false;
+  List userToken = [];
+  String username = "";
 
   @override
   void initState() {
@@ -44,6 +46,8 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
       userData = userSnap.data()!;
       followers = userSnap.data()!['followers'].length;
       following = userSnap.data()!['following'].length;
+      userToken = userSnap.data()!['tokens'];
+      username = userSnap.data()!['username'];
       isFollowing = userSnap
           .data()!['followers']
           .contains(FirebaseAuth.instance.currentUser!.uid);
@@ -152,7 +156,8 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
                                       FirestoreMethods().followUser(
                                           FirebaseAuth
                                               .instance.currentUser!.uid,
-                                          widget.anotherUserId);
+                                          widget.anotherUserId,
+                                          userToken.last);
                                       setState(() {
                                         isFollowing = false;
                                         followers--;
@@ -182,7 +187,8 @@ class _AccountHeaderLainState extends State<AccountHeaderLain> {
                                       FirestoreMethods().followUser(
                                           FirebaseAuth
                                               .instance.currentUser!.uid,
-                                          widget.anotherUserId);
+                                          widget.anotherUserId,
+                                          userToken.last);
                                       setState(() {
                                         isFollowing = true;
                                         followers++;

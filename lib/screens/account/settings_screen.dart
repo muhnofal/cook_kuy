@@ -1,4 +1,5 @@
 import 'package:cook_kuy/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -49,17 +50,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.logout,
-                  color: ijoSkripsi,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Log out")
-              ],
+            InkWell(
+              onTap: () {
+                setState(() {
+                  FirebaseAuth.instance.signOut();
+                });
+              },
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.logout,
+                    color: ijoSkripsi,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Log out")
+                ],
+              ),
             ),
           ],
         ),

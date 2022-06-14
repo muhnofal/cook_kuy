@@ -44,7 +44,8 @@ class AuthMethods {
           followers: [],
           following: [],
           photoUrl: imageFile,
-          bio: "My favorite ingredients is egg :)"
+          bio: "My favorite ingredients is egg :)",
+          tokens: []
         );
 
         await _firestore.collection('users').doc(credential.user!.uid).set(

@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/model/recipe.dart';
 import 'package:cook_kuy/resources/storage_methods.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -128,11 +131,42 @@ class FirestoreMethods {
     }
   }
 
-  Future<void> followUserNew() async {
-    
+  void sendPushMessage(String token, String username, String uid) async {
+    if (token == null) {
+      print('Unable to send FCM message, no token exists.');
+      return;
+    }
+
+    try {
+      var result = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Authorization':
+              "key=AAAAfu5Xu18:APA91bHqBpp7yvho59dOsLzfDRGLrzDkERhuJbU9cAqV1VU6R9D7HS351M6QUfWHRnZKYPeJ63VYLD0Cl0ezIUmwpobeAVgjWs07eCwDWYJJ5M69SpoFBnxF9uSDmiZLU5pf1yvwIh2V",
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "to": token,
+          "collapse_key": "type_a",
+          "notification": {
+            "body": "$username started to follow you",
+            "title": "Someone Following You"
+          },
+          "data": {
+            "route": "/another_account",
+            "anotherUserId": uid,
+            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+          }
+        }),
+      );
+      print('FCM request for device sent! ${result.statusCode}');
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Future<void> followUser(String uid, String anotherUserId) async {
+  Future<void> followUser(
+      String uid, String anotherUserId, String token) async {
     try {
       DocumentSnapshot snap =
           await _firestore.collection('users').doc(uid).get();
@@ -154,7 +188,10 @@ class FirestoreMethods {
         _firestore.collection('users').doc(anotherUserId).update({
           'followers': FieldValue.arrayUnion([uid])
         });
+        //push notification
+        sendPushMessage(token, snap['username'], uid);
       }
+
       // if (following.contains(followId)) {
       //   await _firestore.collection('users').doc(uid).update({
       //     'followers': FieldValue.arrayRemove([uid])
