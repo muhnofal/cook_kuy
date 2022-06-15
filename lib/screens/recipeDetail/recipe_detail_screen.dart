@@ -262,15 +262,21 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 250,
-                        height: 250,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                // fit
-                                image: NetworkImage(step[index]['image'])),
-                            borderRadius: BorderRadius.circular(20)),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamed(AppRouter.navrecipeDetail);
+                        },
+                        child: Container(
+                          width: 250,
+                          height: 250,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  // fit
+                                  image: NetworkImage(step[index]['image'])),
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
                       ),
                       const SizedBox(
                         height: 10,

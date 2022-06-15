@@ -47,7 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Text("Change Language")
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             InkWell(

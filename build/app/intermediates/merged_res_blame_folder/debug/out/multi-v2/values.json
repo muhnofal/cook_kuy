@@ -1,27 +1,29 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\KAMPUS\\Semester 8\\cook_kuy\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\KULIAH\\Skripsi\\CookKuy\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "D:\\KAMPUS\\Semester 8\\cook_kuy\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\5cf36af8c665794dec2262fc6fa16b40\\coordinatorlayout-1.0.0\\res\\values\\values.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,199,281,385,494,614,712",
-                        "endColumns": "143,81,103,108,119,97,74",
-                        "endOffsets": "194,276,380,489,609,707,782"
+                        "startLines": "2,102,3,13",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,5935,116,724",
+                        "endLines": "2,104,12,101",
+                        "endColumns": "60,12,24,24",
+                        "endOffsets": "111,6075,719,5930"
                     },
                     "to": {
-                        "startLines": "126,127,128,129,130,131,132",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "8966,9110,9192,9296,9405,9525,9623",
-                        "endColumns": "143,81,103,108,119,97,74",
-                        "endOffsets": "9105,9187,9291,9400,9520,9618,9693"
+                        "startLines": "2,155,184,194",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "105,11132,12627,13235",
+                        "endLines": "2,157,193,282",
+                        "endColumns": "60,12,24,24",
+                        "endOffsets": "161,11272,13230,18441"
                     }
                 },
                 {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\cea45e25bbe77c9713c39e234ccfd7bd\\jetified-window-1.0.0-beta04\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\cea45e25bbe77c9713c39e234ccfd7bd\\jetified-window-1.0.0-beta04\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,7,8,9,10,11,19,23,34,51",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -40,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\1c0769389455a4c14b7a50bc2530cb4a\\jetified-play-services-base-18.0.1\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\1c0769389455a4c14b7a50bc2530cb4a\\jetified-play-services-base-18.0.1\\res\\values\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,33,46",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -59,7 +61,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\4a1e8147c3db656939cfc830651ce63e\\jetified-play-services-basement-18.0.0\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\4a1e8147c3db656939cfc830651ce63e\\jetified-play-services-basement-18.0.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "4,7",
                         "startColumns": "0,0",
@@ -76,7 +78,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\14b93615368c2249f1830e26ca064ab5\\core-1.6.0\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\14b93615368c2249f1830e26ca064ab5\\core-1.6.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,89,90,94,95,96,97,104,111,159,191,228",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -95,7 +97,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\ec20f7242759cfe0d6237ced59ef1a02\\browser-1.0.0\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\ec20f7242759cfe0d6237ced59ef1a02\\browser-1.0.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -112,7 +114,24 @@
                     }
                 },
                 {
-                    "source": "D:\\KAMPUS\\Semester 8\\cook_kuy\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "D:\\KULIAH\\Skripsi\\CookKuy\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,199,281,385,494,614,712",
+                        "endColumns": "143,81,103,108,119,97,74",
+                        "endOffsets": "194,276,380,489,609,707,782"
+                    },
+                    "to": {
+                        "startLines": "126,127,128,129,130,131,132",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "8966,9110,9192,9296,9405,9525,9623",
+                        "endColumns": "143,81,103,108,119,97,74",
+                        "endOffsets": "9105,9187,9291,9400,9520,9618,9693"
+                    }
+                },
+                {
+                    "source": "D:\\KULIAH\\Skripsi\\CookKuy\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -128,25 +147,6 @@
                         "endLines": "138,141",
                         "endColumns": "12,12",
                         "endOffsets": "10061,10230"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\M.NAUFAL\\.gradle\\caches\\transforms-2\\files-2.1\\5cf36af8c665794dec2262fc6fa16b40\\coordinatorlayout-1.0.0\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "2,102,3,13",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,5935,116,724",
-                        "endLines": "2,104,12,101",
-                        "endColumns": "60,12,24,24",
-                        "endOffsets": "111,6075,719,5930"
-                    },
-                    "to": {
-                        "startLines": "2,155,184,194",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "105,11132,12627,13235",
-                        "endLines": "2,157,193,282",
-                        "endColumns": "60,12,24,24",
-                        "endOffsets": "161,11272,13230,18441"
                     }
                 }
             ]
