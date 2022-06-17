@@ -35,18 +35,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(14.0),
         child: Column(
           children: [
-            Row(
-              children: const [
-                Icon(
-                  Icons.language_rounded,
-                  color: ijoSkripsi,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Change Language")
-              ],
-            ),
+            // Row(
+            //   children: const [
+            //     Icon(
+            //       Icons.language_rounded,
+            //       color: ijoSkripsi,
+            //     ),
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     Text("Change Language")
+            //   ],
+            // ),
             const SizedBox(
               height: 10,
             ),

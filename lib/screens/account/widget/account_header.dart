@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/screens/account/editprofile_screen.dart';
 import 'package:cook_kuy/screens/account/widget/follow_following_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,18 +7,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AccountHeader extends StatefulWidget {
-  final String userProfilePict;
-  final String username;
-  final String bio;
-  final List followers;
-  final List following;
+  final String uid;
   const AccountHeader(
       {Key? key,
-      required this.username,
-      required this.userProfilePict,
-      required this.bio,
-      required this.followers,
-      required this.following})
+      required this.uid})
       : super(key: key);
 
   @override
@@ -26,108 +19,127 @@ class AccountHeader extends StatefulWidget {
 
 class _AccountHeaderState extends State<AccountHeader> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("ini userId: ${widget.uid}");
+  }
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: CircleAvatar(
-            radius: 40,
-            backgroundImage: NetworkImage(widget.userProfilePict),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.username,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  widget.bio,
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 45.0),
-              child: FollowAndFollowingWidget(
-                count: widget.followers.length.toString(),
-                labeltext: "Followers",
-              ),
-            ),
-            const SizedBox(
-              width: 25,
-            ),
-            const SizedBox(
-              height: 40,
-              child: VerticalDivider(
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(
-              width: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 45.0),
-              child: FollowAndFollowingWidget(
-                count: widget.following.length.toString(),
-                labeltext: "Following",
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
+    return StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          print("ini ${snapshot.data}");
+          if (!snapshot.hasData) {
+            return Container();
+          }
+          final userData = snapshot.data;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade400),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Text(
-                      "Edit Profile",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+              Center(
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(userData!['photoUrl']),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        userData['username'],
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                    ),
+                      Text(
+                        userData['bio'],
+                      ),
+                    ],
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 45.0),
+                    child: FollowAndFollowingWidget(
+                      count: userData['followers'].length.toString(),
+                      labeltext: "Followers",
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                    child: VerticalDivider(
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 45.0),
+                    child: FollowAndFollowingWidget(
+                      count: userData['following'].length.toString(),
+                      labeltext: "Following",
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const EditProfileScreen()),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: const Text(
+                            "Edit Profile",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
-          ),
-        ),
-      ],
-    );
+          );
+        });
   }
 }

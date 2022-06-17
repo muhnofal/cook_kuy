@@ -72,41 +72,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      splashColor: Colors.white,
-                      onTap: () {    Navigator.of(context, rootNavigator: true)
-                              .pushNamed(AppRouter.searchUsers);},
-                      child: Container(
-                        width: 150,
-                        height: 20,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(255, 235, 235, 235)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.search,
-                                color: ijoSkripsi,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                "Search users",
-                                style: TextStyle(color: abuSkripsi),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                // actions: [
+                //   Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: InkWell(
+                //       splashColor: Colors.white,
+                //       onTap: () {    Navigator.of(context, rootNavigator: true)
+                //               .pushNamed(AppRouter.searchUsers);},
+                //       child: Container(
+                //         width: 150,
+                //         height: 20,
+                //         decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(20),
+                //             color: const Color.fromARGB(255, 235, 235, 235)),
+                //         child: Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: Row(
+                //             children: const [
+                //               Icon(
+                //                 Icons.search,
+                //                 color: ijoSkripsi,
+                //               ),
+                //               SizedBox(
+                //                 width: 10,
+                //               ),
+                //               Text(
+                //                 "Search users",
+                //                 style: TextStyle(color: abuSkripsi),
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   )
+                // ],
                 backgroundColor: Colors.white,
               ),
               body: StreamBuilder<DocumentSnapshot>(

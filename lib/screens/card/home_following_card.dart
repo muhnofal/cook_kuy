@@ -14,29 +14,23 @@ class HomeFollowingCard extends StatefulWidget {
 }
 
 class _HomeFollowingCardState extends State<HomeFollowingCard> {
-  var userData = {};
-  getanotherUserData() async {
-    try {
-      var userSnap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.recipeSnap['uid'])
-          .get();
+  // var userData = {};
+  // getanotherUserData() async {
+  //   try {
+  //     var userSnap = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(widget.recipeSnap['uid'])
+  //         .get();
 
-      userData = userSnap.data()!;
-      setState(() {});
-    } catch (e) {
-      showSnackBar(
-        e.toString(),
-        context,
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getanotherUserData();
-  }
+  //     userData = userSnap.data()!;
+  //     setState(() {});
+  //   } catch (e) {
+  //     showSnackBar(
+  //       e.toString(),
+  //       context,
+  //     );
+  //   }
+  // }
 
   // @override
   // void initState() {
@@ -69,22 +63,32 @@ class _HomeFollowingCardState extends State<HomeFollowingCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage:
-                          NetworkImage(userData['photoUrl']),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(userData['username'])
-                  ],
-                ),
-              ),
+              StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(widget.recipeSnap['uid'])
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if(!snapshot.hasData){
+                      return Container();
+                    }
+                    final userData = snapshot.data;
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(userData!['photoUrl']),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(userData['username'])
+                        ],
+                      ),
+                    );
+                  }),
               const SizedBox(
                 height: 5,
               ),

@@ -27,13 +27,7 @@ class _AccountScreenState extends State<AccountScreen> {
           return [
             const AppbarAccount(),
             SliverToBoxAdapter(
-              child: AccountHeader(
-                username: userProvider.getUser.username,
-                userProfilePict: userProvider.getUser.photoUrl,
-                bio: userProvider.getUser.bio,
-                followers: userProvider.getUser.followers,
-                following: userProvider.getUser.following
-              ),
+              child: AccountHeader(uid: userProvider.getUser.uid),
             ),
             SliverPersistentHeader(
               pinned: true,

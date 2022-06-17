@@ -47,36 +47,36 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
 
               return Column(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15, right: 15, top: 10),
-                    child: SizedBox(
-                      height: 40,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          FilterChip(
-                              selected: true,
-                              label: const Text("Sarapan"),
-                              onSelected: (_) {}),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          FilterChip(
-                              selected: true,
-                              label: const Text("Makan Siang"),
-                              onSelected: (_) {}),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          FilterChip(
-                              selected: true,
-                              label: const Text("Makan Malam"),
-                              onSelected: (_) {})
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsets.only(left: 15, right: 15, top: 10),
+                  //   child: SizedBox(
+                  //     height: 40,
+                  //     child: ListView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       children: [
+                  //         FilterChip(
+                  //             selected: true,
+                  //             label: const Text("Sarapan"),
+                  //             onSelected: (_) {}),
+                  //         const SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         FilterChip(
+                  //             selected: true,
+                  //             label: const Text("Makan Siang"),
+                  //             onSelected: (_) {}),
+                  //         const SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         FilterChip(
+                  //             selected: true,
+                  //             label: const Text("Makan Malam"),
+                  //             onSelected: (_) {})
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),
