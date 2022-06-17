@@ -35,14 +35,14 @@ class _SearchResultCardState extends State<SearchResultCard> {
         children: [
           Container(
             // width: double.infinity,
-            height: 100,
+            height: 110,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
                 // fit
                 image: NetworkImage(widget.snap['image_url'].toString()),
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             ),
           ),
@@ -59,25 +59,22 @@ class _SearchResultCardState extends State<SearchResultCard> {
               ),
             ),
           ),
+          // RatingBar.builder(
+          //   ignoreGestures: true,
+          //   initialRating: widget.snap['rating'].toDouble(),
+          //   minRating: 1,
+          //   direction: Axis.horizontal,
+          //   itemSize: 20,
+          //   itemBuilder: ((context, index) => const Icon(
+          //         Icons.star,
+          //         color: Colors.amber,
+          //       )),
+          //   onRatingUpdate: (rating) {
+          //     print(rating);
+          //   },
+          // ),
           const SizedBox(
-            height: 10,
-          ),
-          RatingBar.builder(
-            ignoreGestures: true,
-            initialRating: widget.snap['rating'].toDouble(),
-            minRating: 1,
-            direction: Axis.horizontal,
-            itemSize: 20,
-            itemBuilder: ((context, index) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                )),
-            onRatingUpdate: (rating) {
-              print(rating);
-            },
-          ),
-          const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,12 +84,31 @@ class _SearchResultCardState extends State<SearchResultCard> {
                 width: 20,
                 height: 20,
               ),
-              SizedBox(
-                width: 10,
+              const SizedBox(
+                width: 5,
               ),
-              Text("5 Langkah", style: TextStyle(color: Colors.grey[500]),)
+              Text(
+                "5 Langkah",
+                style: TextStyle(color: Colors.grey[500]),
+              )
             ],
           ),
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.favorite,
+                color: ijoSkripsi,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(widget.snap['like'].length.toString())
+            ],
+          )
         ],
       ),
     );

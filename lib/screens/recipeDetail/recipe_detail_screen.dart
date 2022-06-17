@@ -63,7 +63,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               recipeImage(snapshot),
               introduce(snapshot),
               divider(),
-              rating(snapshot),
+              addToFavorite(snapshot),
               divider(),
               ingredients(snapshot),
               divider(),
@@ -351,41 +351,98 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     );
   }
 
-  Widget rating(final snap) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Rate this recipe",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Center(
-              child: RatingBar.builder(
-                initialRating: 0,
-                // minRating: 1,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 5),
-                direction: Axis.horizontal,
-                itemSize: 50,
-                itemBuilder: ((context, index) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    )),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
+  Widget addToFavorite(final snap) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    return StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(widget.snap['recipe_id'])
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          }
+
+          var recipeDoc = snapshot.data;
+
+          List favoriteList = recipeDoc!.get('favorite');
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const Text(
+                  //   "Rate this recipe",
+                  //   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  Center(
+                      // child: RatingBar.builder(
+                      //   initialRating: 0,
+                      //   // minRating: 1,
+                      //   itemPadding: const EdgeInsets.symmetric(horizontal: 5),
+                      //   direction: Axis.horizontal,
+                      //   itemSize: 50,
+                      //   itemBuilder: ((context, index) => const Icon(
+                      //         Icons.star,
+                      //         color: Colors.amber,
+                      //       )),
+                      //   onRatingUpdate: (rating) {
+                      //     print(rating);
+                      //   },
+                      // ),
+                      child: favoriteList.contains(userProvider.getUser.uid)
+                          ? SizedBox(
+                              width: double.infinity / 2,
+                              height: 50,
+                              child: ElevatedButton(
+                                child: const Text("Delete from favorite"),
+                                style: ElevatedButton.styleFrom(
+                                  primary: ijoSkripsi,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await FirestoreMethods().addFavorite(
+                                      widget.snap['recipe_id'],
+                                      userProvider.getUser.uid,
+                                      favoriteList);
+                                },
+                              ),
+                            )
+                          : SizedBox(
+                              width: double.infinity / 2,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: const BorderSide(color: ijoSkripsi),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Add to favorite",
+                                  style: TextStyle(color: ijoSkripsi),
+                                ),
+                                onPressed: () async {
+                                  await FirestoreMethods().addFavorite(
+                                      widget.snap['recipe_id'],
+                                      userProvider.getUser.uid,
+                                      favoriteList);
+                                },
+                              ),
+                            )),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 
   Widget introduce(final snap) {
@@ -408,7 +465,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
 
           var recipeDoc = snapshot.data;
 
-          List favoriteList = recipeDoc!.get('favorite');
+          List likeList = recipeDoc!.get('like');
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: Column(
@@ -450,20 +507,25 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         ],
                       ),
                     ),
-                    InkWell(
-                      splashFactory: NoSplash.splashFactory,
-                      onTap: () async {
-                        await FirestoreMethods().addFavorite(
-                            widget.snap['recipe_id'],
-                            userProvider.getUser.uid,
-                            favoriteList);
-                      },
-                      child: Icon(Icons.favorite,
-                          size: 45,
-                          color: favoriteList.contains(userProvider.getUser.uid)
-                              ? ijoSkripsi
-                              : Colors.grey[400]),
-                    )
+                    Column(
+                      children: [
+                        InkWell(
+                          splashFactory: NoSplash.splashFactory,
+                          onTap: () async {
+                            await FirestoreMethods().likes(
+                                widget.snap['recipe_id'],
+                                userProvider.getUser.uid,
+                                likeList);
+                          },
+                          child: Icon(Icons.favorite,
+                              size: 45,
+                              color: likeList.contains(userProvider.getUser.uid)
+                                  ? ijoSkripsi
+                                  : Colors.grey[400]),
+                        ),
+                        Text(likeList.length.toString())
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -479,21 +541,21 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 ),
                 Row(
                   children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: kuningSkripsi,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(snap['rating'].toString())
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    // Row(
+                    //   children: [
+                    //     const Icon(
+                    //       Icons.star,
+                    //       color: kuningSkripsi,
+                    //     ),
+                    //     const SizedBox(
+                    //       width: 5,
+                    //     ),
+                    //     Text(snap['rating'].toString())
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   width: 20,
+                    // ),
                     Row(
                       children: [
                         Image.asset(

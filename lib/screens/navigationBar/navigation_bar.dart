@@ -48,7 +48,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
-          initialRoute: AppRouter.home,
+          initialRoute: AppRouter.cook,
           onGenerateRoute: AppRouter.generateRoute,
         ),
         //ini masih ada yang harus ditambahkan

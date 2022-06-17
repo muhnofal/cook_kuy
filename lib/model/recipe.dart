@@ -5,7 +5,7 @@ class Recipe {
   final String description;
   final String image;
   final String mainIngre;
-  final double rating;
+  final List<String> like;
   final String recipeId;
   final List<String> additionalIngre;
   final List<Map<String, dynamic>> step;
@@ -18,7 +18,7 @@ class Recipe {
     required this.description,
     required this.image,
     required this.mainIngre,
-    required this.rating,
+    required this.like,
     required this.recipeId,
     required this.additionalIngre,
     required this.step,
@@ -34,7 +34,7 @@ class Recipe {
       name: snapshot['name'],
       description: snapshot['description'],
       image: snapshot['image_url'],
-      rating: snapshot['rating'],
+      like: snapshot['like'],
       recipeId: snapshot['recipe_id'],
       step: snapshot['step'],
       mainIngre: snapshot['main_ingredient'],
@@ -51,7 +51,7 @@ class Recipe {
     "ingredients": additionalIngre,
     "main_ingredient": mainIngre,
     "name": name,
-    "rating": rating,
+    "like": like,
     "recipe_id": recipeId,
     "step": step,
     "uid": uid,
