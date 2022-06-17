@@ -1,5 +1,6 @@
 import 'package:cook_kuy/screens/account/account_screen.dart';
 import 'package:cook_kuy/screens/account/editprofile_screen.dart';
+import 'package:cook_kuy/screens/account/followingandfollowers_screen.dart';
 import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
@@ -21,6 +22,7 @@ class AppRouter {
   static const createRecipe = '/create_recipe';
   static const cook = '/cook';
   static const account = '/account';
+  static const followingandfollowers = '/followingandfollowers';
   static const additionalIngre = '/additional_ingre';
   static const searchResult = 'additional_ingre/search_result';
   static const recipeDetail = '/recipe_detail';
@@ -36,6 +38,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SearchUsers());
       case account:
         return MaterialPageRoute(builder: (_) => const AccountScreen());
+      case followingandfollowers:
+        return MaterialPageRoute(builder: (_) => const FollowingAndFollowersScreen());
       case cook:
         return MaterialPageRoute(builder: (_) => const CookScreen());
       case login:

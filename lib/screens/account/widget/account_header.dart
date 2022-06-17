@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../router.dart';
+
 class AccountHeader extends StatefulWidget {
   final String uid;
-  const AccountHeader(
-      {Key? key,
-      required this.uid})
-      : super(key: key);
+  const AccountHeader({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<AccountHeader> createState() => _AccountHeaderState();
@@ -24,6 +23,7 @@ class _AccountHeaderState extends State<AccountHeader> {
     super.initState();
     print("ini userId: ${widget.uid}");
   }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -74,9 +74,16 @@ class _AccountHeaderState extends State<AccountHeader> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 45.0),
-                    child: FollowAndFollowingWidget(
-                      count: userData['followers'].length.toString(),
-                      labeltext: "Followers",
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                          AppRouter.followingandfollowers,
+                        );
+                      },
+                      child: FollowAndFollowingWidget(
+                        count: userData['followers'].length.toString(),
+                        labeltext: "Followers",
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -93,9 +100,16 @@ class _AccountHeaderState extends State<AccountHeader> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 45.0),
-                    child: FollowAndFollowingWidget(
-                      count: userData['following'].length.toString(),
-                      labeltext: "Following",
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                          AppRouter.followingandfollowers,
+                        );
+                      },
+                      child: FollowAndFollowingWidget(
+                        count: userData['following'].length.toString(),
+                        labeltext: "Following",
+                      ),
                     ),
                   ),
                 ],
