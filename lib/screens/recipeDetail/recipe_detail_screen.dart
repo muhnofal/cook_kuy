@@ -46,34 +46,32 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final snapshot = widget.snap;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(snapshot['name']),
-          centerTitle: true,
-          titleTextStyle: const TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-          backgroundColor: Colors.white,
-          elevation: 1,
-          iconTheme: const IconThemeData(color: Colors.black),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              recipeImage(snapshot),
-              introduce(snapshot),
-              divider(),
-              addToFavorite(snapshot),
-              divider(),
-              ingredients(snapshot),
-              divider(),
-              stepByStep(snapshot),
-              divider(),
-              commentBar(snapshot),
-              divider(),
-              commentList(snapshot)
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(snapshot['name']),
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            recipeImage(snapshot),
+            introduce(snapshot),
+            divider(),
+            addToFavorite(snapshot),
+            divider(),
+            ingredients(snapshot),
+            divider(),
+            stepByStep(snapshot),
+            divider(),
+            commentBar(snapshot),
+            divider(),
+            commentList(snapshot)
+          ],
         ),
       ),
     );
