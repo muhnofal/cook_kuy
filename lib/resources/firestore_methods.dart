@@ -16,7 +16,7 @@ class FirestoreMethods {
       String mainIngre,
       List<String> additionalIngre,
       Uint8List image,
-      double rating,
+      List<String> like,
       List<Map<String, dynamic>> step,
       List<String> favorite,
       String uid) async {
@@ -49,7 +49,7 @@ class FirestoreMethods {
           image: photoUrl,
           mainIngre: mainIngre,
           additionalIngre: additionalIngre,
-          rating: rating,
+          like: like,
           step: stepByStepConvert,
           datePublished: DateTime.now(),
           favorite: favorite);
@@ -108,6 +108,22 @@ class FirestoreMethods {
             .doc(commentId)
             .update({
           'likes': FieldValue.arrayUnion([uid])
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> likes(String recipeId, String uid, List favorite) async {
+    try {
+      if (favorite.contains(uid)) {
+        await _firestore.collection('recipe').doc(recipeId).update({
+          'like': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        await _firestore.collection('recipe').doc(recipeId).update({
+          'like': FieldValue.arrayUnion([uid])
         });
       }
     } catch (e) {

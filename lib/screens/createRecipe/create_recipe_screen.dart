@@ -339,7 +339,7 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
           mainIngreController.text,
           additionalIngre,
           _recipePhoto!,
-          0,
+          [],
           stepBystepList,
           [],
           uid,);
