@@ -134,8 +134,8 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
     super.initState();
     addData();
 
-    loadFCM();
-    listenFCM();
+    // loadFCM();
+    // listenFCM();
     setupToken();
   }
 

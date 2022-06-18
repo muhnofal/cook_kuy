@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/screens/account/widget/persistent_header.dart';
+import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,25 +22,6 @@ class FollowingAndFollowersScreen extends StatefulWidget {
 
 class _FollowingAndFollowersScreenState
     extends State<FollowingAndFollowersScreen> {
-  final List<User> _users = [
-    User(
-        'Ravy Aryo',
-        '@ravyaryo',
-        "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        true),
-    User(
-        'Irsal Diki',
-        '@irsaldiki',
-        "https://www.mnp.ca/-/media/foundation/integrations/personnel/2020/12/16/13/57/personnel-image-4483.jpg?h=800&w=600&hash=9D5E5FCBEE00EB562DCD8AC8FDA8433D",
-        false),
-    User(
-        'M. Naufal',
-        '@mnaufal',
-        "https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person-279x300.jpg",
-        true),
-  ];
-
-  bool isFollowed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,221 +46,333 @@ class _FollowingAndFollowersScreenState
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
-          title: const Text(
-            "[Nama User]",
+          title: Text(
+            userProvider.getUser.username.toString(),
             style: TextStyle(color: Colors.black, fontSize: 14),
           ),
         ),
         body: TabBarView(children: [
           //ini tab following
-          StreamBuilder(
+          StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
-                  .where('uid', isEqualTo: userProvider.getUser.uid)
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
                   .snapshots(),
-              builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (!snapshot.hasData) {
+              builder: (context, snapshot1) {
+                if (!snapshot1.hasData) {
                   return const Center(
                     child: CircularProgressIndicator(color: ijoSkripsi),
                   );
                 }
-                return snapshot.data!.docs.length == 0
+                final userDoc = snapshot1.data;
+                List followingList = userDoc!.get('following');
+                return followingList.length == 0
                     ? Center(
                         child: Text(
                           "you haven't followed anyone",
                           style: TextStyle(color: Colors.grey[400]),
                         ),
                       )
-                    : Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                    : SizedBox(
                         height: double.infinity,
                         width: double.infinity,
                         child: ListView.builder(
-                          itemCount: _users.length,
+                          itemCount: followingList.length,
                           itemBuilder: (context, index) {
-                            final snap = snapshot.data!.docs[index].data();
-                            return Container(
-                                margin: const EdgeInsets.only(top: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 60,
-                                          height: 60,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child:
-                                                Image.network(snap['photoUrl']),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        //ini pal
-                                        Text(
-                                          snap['username'],
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    //ini pal
-                                    isFollowed
-                                        ? InkWell(
-                                            onTap: () {
-                                              FirestoreMethods().followUser(
-                                                  FirebaseAuth.instance
-                                                      .currentUser!.uid,
-                                                  widget.anotherUserId,
-                                                  userToken.last);
-                                              setState(() {
-                                                isFollowed = false;
-                                                followers--;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xFFeeeeee)),
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                              ),
-                                              child: const Text(
-                                                "Unfollow",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
+                            return StreamBuilder<DocumentSnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(followingList[index])
+                                    .snapshots(),
+                                builder: (context, snapshot2) {
+                                  if (!snapshot2.hasData) {
+                                    return Container();
+                                  }
+                                  final userData = snapshot2.data;
+                                  final List ownerFollower =
+                                      userData!['followers'];
+                                  final List userToken = userData['tokens'];
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          AppRouter.anotherAccount,
+                                          arguments: userData['uid']);
+                                    },
+                                    child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                  height: 60,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    child: Image.network(
+                                                        userData['photoUrl']),
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                            )
-                                        : InkWell(
-                                            onTap: () {
-                                              FirestoreMethods().followUser(
-                                                  FirebaseAuth.instance
-                                                      .currentUser!.uid,
-                                                  widget.anotherUserId,
-                                                  userToken.last);
-                                              setState(() {
-                                                isFollowed = true;
-                                                followers++;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xFFeeeeee)),
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                              ),
-                                              child: const Text(
-                                                "Follow",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
+                                                const SizedBox(
+                                                  width: 10,
                                                 ),
-                                              ),
-                                            )),
-                                  ],
-                                ));
+                                                //ini pal
+                                                Text(
+                                                  userData['username'],
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            //ini pal
+                                            ownerFollower.contains(FirebaseAuth
+                                                    .instance.currentUser!.uid)
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      FirestoreMethods()
+                                                          .followUser(
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid,
+                                                        userData['uid'],
+                                                        userToken.last,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: const Color(
+                                                                0xFFeeeeee)),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 8,
+                                                                horizontal: 20),
+                                                        child: Text(
+                                                          "Unfollow",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ))
+                                                : InkWell(
+                                                    onTap: () {
+                                                      FirestoreMethods()
+                                                          .followUser(
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid,
+                                                        userData['uid'],
+                                                        userToken.last,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: const Color(
+                                                                0xFFeeeeee)),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 8,
+                                                                horizontal: 20),
+                                                        child: Text(
+                                                          "Follow",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )),
+                                          ],
+                                        )),
+                                  );
+                                });
                           },
                         ),
                       );
               }),
-              //ini tab followers(belom diapa apain, harusnya sama kayak yang following codingannya cuman bedanya ini buat followers)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            height: double.infinity,
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount: _users.length,
-              itemBuilder: (context, index) {
-                return userComponent(
-                    name: _users[index].name,
-                    username: _users[index].username,
-                    image: _users[index].image,
-                    isFollowed: _users[index].isFollowedByMe,
-                    user: _users[index]);
-              },
-            ),
-          ),
+          StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .snapshots(),
+              builder: (context, snapshot1) {
+                if (!snapshot1.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: ijoSkripsi),
+                  );
+                }
+                final userDoc = snapshot1.data;
+                List followersList = userDoc!.get('followers');
+                return followersList.length == 0
+                    ? Center(
+                        child: Text(
+                          "you don't have followers",
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )
+                    : SizedBox(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: ListView.builder(
+                          itemCount: followersList.length,
+                          itemBuilder: (context, index) {
+                            return StreamBuilder<DocumentSnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(followersList[index])
+                                    .snapshots(),
+                                builder: (context, snapshot2) {
+                                  if (!snapshot2.hasData) {
+                                    return Container();
+                                  }
+                                  final userData = snapshot2.data;
+                                  final List ownerFollower =
+                                      userData!['followers'];
+                                  final List userToken = userData['tokens'];
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          AppRouter.anotherAccount,
+                                          arguments: userData['uid']);
+                                    },
+                                    child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                  height: 60,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    child: Image.network(
+                                                        userData['photoUrl']),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                //ini pal
+                                                Text(
+                                                  userData['username'],
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            //ini pal
+                                            ownerFollower.contains(FirebaseAuth
+                                                    .instance.currentUser!.uid)
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      FirestoreMethods()
+                                                          .followUser(
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid,
+                                                        userData['uid'],
+                                                        userToken.last,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: const Color(
+                                                                0xFFeeeeee)),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 8,
+                                                                horizontal: 20),
+                                                        child: Text(
+                                                          "Unfollow",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ))
+                                                : InkWell(
+                                                    onTap: () {
+                                                      FirestoreMethods()
+                                                          .followUser(
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid,
+                                                        userData['uid'],
+                                                        userToken.last,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: const Color(
+                                                                0xFFeeeeee)),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 8,
+                                                                horizontal: 20),
+                                                        child: Text(
+                                                          "Follow",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )),
+                                          ],
+                                        )),
+                                  );
+                                });
+                          },
+                        ),
+                      );
+              }),
         ]),
       ),
     );
   }
-}
-//ini gajadi dipake
-userComponent({name, username, image, isFollowed, required User user}) {
-  return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(image),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: isFollowed ? const Color(0xFFeeeeee) : Color(0xffffff),
-              ),
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: MaterialButton(
-              onPressed: () {
-                setState() {
-                  user.isFollowedByMe = !user.isFollowedByMe;
-                }
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
-              child: Text(
-                isFollowed ? "Unfollow" : "Follow",
-                style: const TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          )
-        ],
-      ));
-}
-
-class User {
-  final String name;
-  final String username;
-  final String image;
-  bool isFollowedByMe;
-  User(this.name, this.username, this.image, this.isFollowedByMe);
 }

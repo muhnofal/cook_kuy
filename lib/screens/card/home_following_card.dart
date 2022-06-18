@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/screens/router.dart';
+import 'package:cook_kuy/utils/colors.dart';
 import 'package:cook_kuy/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
@@ -69,7 +70,7 @@ class _HomeFollowingCardState extends State<HomeFollowingCard> {
                       .doc(widget.recipeSnap['uid'])
                       .snapshots(),
                   builder: (context, snapshot) {
-                    if(!snapshot.hasData){
+                    if (!snapshot.hasData) {
                       return Container();
                     }
                     final userData = snapshot.data;
@@ -79,7 +80,8 @@ class _HomeFollowingCardState extends State<HomeFollowingCard> {
                         children: [
                           CircleAvatar(
                             radius: 20,
-                            backgroundImage: NetworkImage(userData!['photoUrl']),
+                            backgroundImage:
+                                NetworkImage(userData!['photoUrl']),
                           ),
                           const SizedBox(
                             width: 5,
@@ -109,14 +111,13 @@ class _HomeFollowingCardState extends State<HomeFollowingCard> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   children: [
-                    Image.asset(
-                      "assets/images/Star.png",
-                      height: 15,
-                      width: 15,
-                      fit: BoxFit.cover,
+                    Icon(
+                      Icons.favorite,
+                      color: ijoSkripsi,
+                      size: 20,
                     ),
                     const SizedBox(width: 5),
-                    Text(widget.recipeSnap['rating'].toString()),
+                    Text(widget.recipeSnap['like'].length.toString()),
                     const SizedBox(width: 5),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(48),
