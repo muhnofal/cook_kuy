@@ -10,41 +10,31 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
-class RecipeDetailScreen extends StatefulWidget {
-  final String recipeId;
-  const RecipeDetailScreen({Key? key, required this.recipeId})
-      : super(key: key);
+class RecipeDetailScreenTemp extends StatefulWidget {
+  final dynamic snap;
+  const RecipeDetailScreenTemp({Key? key, required this.snap}) : super(key: key);
 
   @override
-  State<RecipeDetailScreen> createState() => _RecipeDetailScreenState();
+  State<RecipeDetailScreenTemp> createState() => _RecipeDetailScreenTempState();
 }
 
-class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
+class _RecipeDetailScreenTempState extends State<RecipeDetailScreenTemp> {
   final TextEditingController _commentController = TextEditingController();
-  String recipeName = "";
+  var userData = {};
 
-  // getData() async {
-  //   var snap = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(widget.uid)
-  //       .get();
-  //   userData = snap.data()!;
-  //   setState(() {});
-  // }
-
-  getRecipe() async {
+  getData() async {
     var snap = await FirebaseFirestore.instance
-        .collection('recipe')
-        .doc(widget.recipeId)
+        .collection('users')
+        .doc(widget.snap['uid'])
         .get();
-    recipeName = snap.get('name');
+    userData = snap.data()!;
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    getRecipe();
+    getData();
   }
 
   @override
@@ -55,9 +45,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final snapshot = widget.snap;
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipeName),
+        title: Text(snapshot['name']),
         centerTitle: true,
         titleTextStyle: const TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
@@ -66,35 +57,22 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
-        child: StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('recipe')
-                .doc(widget.recipeId)
-                .snapshots(),
-            builder: (context, snap) {
-              if (!snap.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              var snapshot = snap.data;
-              return Column(
-                children: [
-                  recipeImage(snapshot),
-                  introduce(snapshot),
-                  divider(),
-                  addToFavorite(snapshot),
-                  divider(),
-                  ingredients(snapshot),
-                  divider(),
-                  stepByStep(snapshot),
-                  divider(),
-                  commentBar(snapshot),
-                  divider(),
-                  commentList(snapshot)
-                ],
-              );
-            }),
+        child: Column(
+          children: [
+            recipeImage(snapshot),
+            introduce(snapshot),
+            divider(),
+            addToFavorite(snapshot),
+            divider(),
+            ingredients(snapshot),
+            divider(),
+            stepByStep(snapshot),
+            divider(),
+            commentBar(snapshot),
+            divider(),
+            commentList(snapshot)
+          ],
+        ),
       ),
     );
   }
@@ -111,7 +89,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('recipe')
-            .doc(widget.recipeId)
+            .doc(widget.snap['recipe_id'])
             .collection('comments')
             .orderBy('date_published', descending: true)
             .snapshots(),
@@ -160,7 +138,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                 InkWell(
                                     onTap: () async {
                                       await FirestoreMethods().likeComment(
-                                          widget.recipeId,
+                                          widget.snap['recipe_id'],
                                           commentData['comment_id'],
                                           commentData['uid'],
                                           commentData['likes']);
@@ -376,7 +354,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('recipe')
-            .doc(widget.recipeId)
+            .doc(widget.snap['recipe_id'])
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -429,7 +407,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                 ),
                                 onPressed: () async {
                                   await FirestoreMethods().addFavorite(
-                                      widget.recipeId,
+                                      widget.snap['recipe_id'],
                                       userProvider.getUser.uid,
                                       favoriteList);
                                 },
@@ -452,7 +430,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                 ),
                                 onPressed: () async {
                                   await FirestoreMethods().addFavorite(
-                                      widget.recipeId,
+                                      widget.snap['recipe_id'],
                                       userProvider.getUser.uid,
                                       favoriteList);
                                 },
@@ -474,7 +452,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('recipe')
-            .doc(widget.recipeId)
+            .doc(widget.snap['recipe_id'])
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -486,82 +464,68 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           var recipeDoc = snapshot.data;
 
           List likeList = recipeDoc!.get('like');
-          String userId = recipeDoc.get('uid');
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(userId)
-                        .snapshots(),
-                    builder: (context, userSnap) {
-                      if(!userSnap.hasData){
-                        return Container();
-                      }
-                      final userData = userSnap.data;
-                      return Row(
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                            AppRouter.anotherAccount,
+                            arguments: userData['uid']);
+                      },
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(userData['photoUrl']),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            DateFormat('dd MMMM yyyy').format(dateTime),
+                            style: const TextStyle(color: abuSkripsi),
+                          ),
                           InkWell(
                             onTap: () {
                               Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(AppRouter.anotherAccount,
-                                      arguments: userData!['uid']);
+                                  .pushNamed(AppRouter.anotherAccount);
                             },
-                            child: CircleAvatar(
-                              radius: 30,
-                              backgroundImage:
-                                  NetworkImage(userData!['photoUrl']),
+                            child: Text(
+                              userData['username'],
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  DateFormat('dd MMMM yyyy').format(dateTime),
-                                  style: const TextStyle(color: abuSkripsi),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pushNamed(AppRouter.anotherAccount);
-                                  },
-                                  child: Text(
-                                    userData['username'],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              InkWell(
-                                splashFactory: NoSplash.splashFactory,
-                                onTap: () async {
-                                  await FirestoreMethods().likes(
-                                      widget.recipeId,
-                                      userProvider.getUser.uid,
-                                      likeList);
-                                },
-                                child: Icon(Icons.favorite,
-                                    size: 45,
-                                    color: likeList
-                                            .contains(userProvider.getUser.uid)
-                                        ? ijoSkripsi
-                                        : Colors.grey[400]),
-                              ),
-                              Text(likeList.length.toString())
-                            ],
                           ),
                         ],
-                      );
-                    }),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        InkWell(
+                          splashFactory: NoSplash.splashFactory,
+                          onTap: () async {
+                            await FirestoreMethods().likes(
+                                widget.snap['recipe_id'],
+                                userProvider.getUser.uid,
+                                likeList);
+                          },
+                          child: Icon(Icons.favorite,
+                              size: 45,
+                              color: likeList.contains(userProvider.getUser.uid)
+                                  ? ijoSkripsi
+                                  : Colors.grey[400]),
+                        ),
+                        Text(likeList.length.toString())
+                      ],
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -659,7 +623,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               trailing: InkWell(
                 onTap: () async {
                   await FirestoreMethods().postComment(
-                      widget.recipeId,
+                      widget.snap['recipe_id'],
                       _commentController.text,
                       user.uid,
                       user.username,

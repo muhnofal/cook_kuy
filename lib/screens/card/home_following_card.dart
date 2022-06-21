@@ -48,7 +48,7 @@ class _HomeFollowingCardState extends State<HomeFollowingCard> {
     return InkWell(
       onTap: () {
         Navigator.of(context, rootNavigator: true)
-            .pushNamed(AppRouter.recipeDetail, arguments: widget.recipeSnap);
+            .pushNamed(AppRouter.recipeDetail, arguments: widget.recipeSnap['recipe_id']);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

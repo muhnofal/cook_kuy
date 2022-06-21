@@ -92,7 +92,7 @@ class _AccountLainState extends State<AccountLain> {
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pushNamed(AppRouter.recipeDetail,
-                                                  arguments: snap);
+                                                  arguments: snap['recipe_id']);
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(

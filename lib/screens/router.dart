@@ -26,6 +26,7 @@ class AppRouter {
   static const additionalIngre = '/additional_ingre';
   static const searchResult = 'additional_ingre/search_result';
   static const recipeDetail = '/recipe_detail';
+  static const recipeDetailTemp = '/recipe_detail_temp';
   static const navrecipeDetail = '/nav_recipe_detail';
   static const anotherAccount = '/another_account';
   static const editProfile = '/edit_profile';
@@ -39,7 +40,8 @@ class AppRouter {
       case account:
         return MaterialPageRoute(builder: (_) => const AccountScreen());
       case followingandfollowers:
-        return MaterialPageRoute(builder: (_) => const FollowingAndFollowersScreen());
+        return MaterialPageRoute(
+            builder: (_) => const FollowingAndFollowersScreen());
       case cook:
         return MaterialPageRoute(builder: (_) => const CookScreen());
       case login:
@@ -53,17 +55,27 @@ class AppRouter {
       case navrecipeDetail:
         return MaterialPageRoute(builder: (_) => const NavRecipeDetail());
       case additionalIngre:
-      var args = routeSettings.arguments as String;
-        return MaterialPageRoute(builder: (_) => AdditionalIngreScreen(mainIngre: args,));
+        var args = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => AdditionalIngreScreen(
+                  mainIngre: args,
+                ));
       case searchResult:
-      var args = routeSettings.arguments as CompleteIngre;
-        return MaterialPageRoute(builder: (_) => SearchResultScreen(completeIngre: args));
+        var args = routeSettings.arguments as CompleteIngre;
+        return MaterialPageRoute(
+            builder: (_) => SearchResultScreen(completeIngre: args));
       case recipeDetail:
-      var args = routeSettings.arguments as dynamic;
-        return MaterialPageRoute(builder: (_) => RecipeDetailScreen(snap: args,));
+        var args = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => RecipeDetailScreen(
+                  recipeId: args,
+                ));
       case anotherAccount:
-      var args = routeSettings.arguments as String;
-        return MaterialPageRoute(builder: (_) => AccountLain(anotherUserId: args,));
+        var args = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => AccountLain(
+                  anotherUserId: args,
+                ));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

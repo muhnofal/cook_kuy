@@ -92,8 +92,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
-                        Navigator.of(context, rootNavigator: true)
-                            .pushNamed(AppRouter.recipeDetail, arguments: snapshot.data!.docs[index].data());
+                        // Navigator.of(context, rootNavigator: true)
+                        //     .pushNamed(AppRouter.recipeDetail, arguments: snapshot.data!.docs[index].data());
+                                                Navigator.of(context, rootNavigator: true)
+                            .pushNamed(AppRouter.recipeDetail, arguments: snapshot.data!.docs[index]['recipe_id']);
                       },
                       child: SearchResultCard(
                           snap: snapshot.data!.docs[index].data()),

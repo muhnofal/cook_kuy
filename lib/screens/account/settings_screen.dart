@@ -1,3 +1,4 @@
+import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {
                 setState(() {
                   FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushNamed(AppRouter.login);
                 });
               },
               child: Row(

@@ -94,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .pushNamed(AppRouter.recipeDetail,
-                                                arguments: snap);
+                                                arguments: snap['recipe_id']);
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
@@ -156,7 +156,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     onTap: () {
                                       Navigator.of(context, rootNavigator: true)
                                           .pushNamed(AppRouter.recipeDetail,
-                                              arguments: snap);
+                                              arguments: snap['recipe_id']);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
