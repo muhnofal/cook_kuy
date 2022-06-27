@@ -22,11 +22,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+  MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Cook Kuy',
         // theme: ThemeData.light()

@@ -3,6 +3,7 @@ import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
 import 'package:cook_kuy/screens/home/home_screen.dart';
+import 'package:cook_kuy/screens/notification/notification_screen.dart';
 import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       const HomeScreen(),
       const CookScreen(),
       const CreateRecipeScreen(),
+      const NotificationScreen(),
       const AccountScreen(),
     ];
   }
@@ -61,6 +63,18 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
           initialRoute: AppRouter.createRecipe,
+          onGenerateRoute: AppRouter.generateRoute,
+        ),
+        //ini masih ada yang harus ditambahkan
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.notifications),
+        title: ('Notification'),
+        textStyle: TextStyle(fontSize: 10),
+        activeColorPrimary: ijoSkripsi,
+        inactiveColorPrimary: kuningSkripsi,
+        routeAndNavigatorSettings: const RouteAndNavigatorSettings(
+          initialRoute: AppRouter.notification,
           onGenerateRoute: AppRouter.generateRoute,
         ),
         //ini masih ada yang harus ditambahkan

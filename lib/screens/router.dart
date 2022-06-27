@@ -8,6 +8,7 @@ import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
 import 'package:cook_kuy/screens/home/home_screen.dart';
 import 'package:cook_kuy/screens/home/search_user_screen.dart';
 import 'package:cook_kuy/screens/login/login_screen.dart';
+import 'package:cook_kuy/screens/notification/notification_screen.dart';
 import 'package:cook_kuy/screens/recipeDetail/navigate_recipe_detail_screen.dart';
 import 'package:cook_kuy/screens/recipeDetail/recipe_detail_screen.dart';
 import 'package:cook_kuy/screens/register/register_screen.dart';
@@ -30,6 +31,7 @@ class AppRouter {
   static const navrecipeDetail = '/nav_recipe_detail';
   static const anotherAccount = '/another_account';
   static const editProfile = '/edit_profile';
+  static const notification = '/notification';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -50,6 +52,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case createRecipe:
         return MaterialPageRoute(builder: (_) => const CreateRecipeScreen());
+      case notification:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case editProfile:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case navrecipeDetail:

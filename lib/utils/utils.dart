@@ -44,6 +44,33 @@ Future<void> startLoading(BuildContext context) async {
       });
 }
 
+Future<void> editProfileLoading(BuildContext context) async {
+  return await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const SimpleDialog(
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          children: [
+            Center(
+              child: CircularProgressIndicator(
+                color: ijoSkripsi,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+                child: Text(
+                  "Edit your profile...",
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
+        );
+      });
+}
+
 Future<void> stopLoading(BuildContext context) async {
   Navigator.of(context, rootNavigator: true).pop();
 }

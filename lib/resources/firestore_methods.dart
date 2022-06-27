@@ -61,11 +61,18 @@ class FirestoreMethods {
     return res;
   }
 
-  Future<void> postComment(String recipeId, String text, String uid,
-      String name, String profilPic, List likes) async {
+  Future<void> postComment(
+      String recipeId,
+      String text,
+      String uid,
+      String name,
+      String profilPic,
+      List likes,
+      String notificationType) async {
     try {
       if (text.isNotEmpty) {
         String commentId = const Uuid().v1();
+        String notificationId = const Uuid().v1();
         _firestore
             .collection('recipe')
             .doc(recipeId)
@@ -80,6 +87,10 @@ class FirestoreMethods {
           'date_published': DateTime.now(),
           'likes': likes
         });
+        // _firestore.collection('users').doc(uid).collection('notification').doc(notificationId).set({
+        //   'notification_id': notificationId,
+        //   'notification'
+        // });
       } else {
         print("text is empty");
       }
@@ -170,7 +181,7 @@ class FirestoreMethods {
           },
           "data": {
             "route": "/another_account",
-            "anotherUserId": uid,
+            // "anotherUserId": uid,
             "click_action": "FLUTTER_NOTIFICATION_CLICK"
           }
         }),
@@ -186,6 +197,7 @@ class FirestoreMethods {
     try {
       DocumentSnapshot snap =
           await _firestore.collection('users').doc(uid).get();
+      String notificationId = const Uuid().v1();
       // List following = (snap.data()! as dynamic)['following'];
 
       List following = (snap.data() as dynamic)['following'];
@@ -204,6 +216,17 @@ class FirestoreMethods {
         _firestore.collection('users').doc(anotherUserId).update({
           'followers': FieldValue.arrayUnion([uid])
         });
+        _firestore
+            .collection('users')
+            .doc(uid)
+            .collection('notification')
+            .doc(notificationId)
+            .set({
+          'notification_id': notificationId,
+          'notification_type': 'userFollow',
+          'recipe_id': '',
+          'uid': anotherUserId
+        });
         //push notification
         sendPushMessage(token, snap['username'], uid);
       }
@@ -219,5 +242,20 @@ class FirestoreMethods {
 
       // }
     } catch (e) {}
+  }
+
+  Future editProfile(
+      String uid, String username, String bio, Uint8List imageFile) async {
+    String res = "Some error occurred";
+    try {
+      String photoUrl = await StorageMethods()
+          .uploadImageToStorage('profilePics', imageFile, false);
+      _firestore
+          .collection('users')
+          .doc(uid)
+          .update({'username': username, 'bio': bio, 'photoUrl': photoUrl});
+      res = "success";
+    } catch (e) {}
+    return res;
   }
 }

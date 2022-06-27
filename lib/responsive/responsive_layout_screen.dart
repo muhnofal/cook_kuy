@@ -12,10 +12,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:cook_kuy/main.dart' as main;
 
 class ResponsiveLayout extends StatefulWidget {
   final Widget webScreenLayout;
   final Widget mobileScreenLayout;
+
   const ResponsiveLayout(
       {Key? key,
       required this.webScreenLayout,
@@ -69,14 +71,11 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
               icon: 'launch_background',
             ),
           ),
+          payload: data['route']
           // payload: data['route'],
         );
-        print("ini adalah data: ${data['route']}");
-        print("ini adalah data: ${data['anotherUserId']}");
-        if (data['route'] == "/another_account") {
-          Navigator.of(context)
-              .pushNamed(data['route'], arguments: data['anotherUserId']);
-        }
+
+        Navigator.of(context).pushNamed('/notification');
       }
     });
   }
@@ -134,8 +133,8 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
     super.initState();
     addData();
 
-    // loadFCM();
-    // listenFCM();
+    loadFCM();
+    listenFCM();
     setupToken();
   }
 

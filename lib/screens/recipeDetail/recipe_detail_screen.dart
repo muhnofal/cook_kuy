@@ -181,16 +181,16 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey[600]),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Reply",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[600]),
-                                )
+                                // const SizedBox(
+                                //   width: 10,
+                                // ),
+                                // Text(
+                                //   "Reply",
+                                //   style: TextStyle(
+                                //       fontSize: 16,
+                                //       fontWeight: FontWeight.bold,
+                                //       color: Colors.grey[600]),
+                                // )
                               ],
                             ),
                           ],
@@ -663,7 +663,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       _commentController.text,
                       user.uid,
                       user.username,
-                      user.photoUrl, []);
+                      user.photoUrl, [], 'comment');
                   _commentController.clear();
                   Navigator.pop(context);
                 },

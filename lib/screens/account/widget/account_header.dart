@@ -10,6 +10,7 @@ import '../../router.dart';
 
 class AccountHeader extends StatefulWidget {
   final String uid;
+
   const AccountHeader({Key? key, required this.uid}) : super(key: key);
 
   @override
@@ -124,12 +125,8 @@ class _AccountHeaderState extends State<AccountHeader> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const EditProfileScreen()),
-                          );
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamed(AppRouter.editProfile);
                         },
                         child: Container(
                           alignment: Alignment.center,
