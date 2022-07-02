@@ -180,9 +180,9 @@ class FirestoreMethods {
             "title": "Someone Following You"
           },
           "data": {
-            "route": "/another_account",
-            // "anotherUserId": uid,
-            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+            // "route": "/another_account",
+            "anotherUserId": uid,
+            "click_action": "/another_account"
           }
         }),
       );
@@ -218,14 +218,14 @@ class FirestoreMethods {
         });
         _firestore
             .collection('users')
-            .doc(uid)
+            .doc(anotherUserId)
             .collection('notification')
-            .doc(notificationId)
+            .doc(uid)
             .set({
           'notification_id': notificationId,
           'notification_type': 'userFollow',
           'recipe_id': '',
-          'uid': anotherUserId
+          'uid': uid
         });
         //push notification
         sendPushMessage(token, snap['username'], uid);

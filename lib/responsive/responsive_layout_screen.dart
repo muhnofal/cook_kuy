@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cook_kuy/main.dart';
 import 'package:cook_kuy/providers/user_provider.dart';
+import 'package:cook_kuy/resources/fcm_service.dart';
 import 'package:cook_kuy/resources/firestore_methods.dart';
 import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
+import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/dimension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -53,29 +55,83 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   // }
 
   void listenFCM() async {
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      //Its compulsory to check if RemoteMessage instance is null or not.
+      RemoteNotification? notification = message!.notification;
+      AndroidNotification? android = message.notification?.android;
+      Map<String, dynamic> data = message.data;
+      var initializationSettingsAndroid =
+          AndroidInitializationSettings('flutter_devs');
+      var initSettings =
+          InitializationSettings(android: initializationSettingsAndroid);
+      flutterLocalNotificationsPlugin.initialize(initSettings,
+          onSelectNotification: (String? payload) async {
+        print("ini adalah id: ${data['anotherUserId']}");
+        print("ini adalah id: ${data['route']}");
+        print("ini adalah payload: $payload");
+        if (payload == "/another_account") {
+          navigatorKey.currentState!.pushNamed(AppRouter.anotherAccount,
+              arguments: data['anotherUserId']);
+          // Navigator.of(context, rootNavigator: true).pushNamed(AppRouter.anotherAccount, arguments: data['anotherUserId']);
+        }
+      });
+
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                //      one that already exists in example app.
+                icon: 'launch_background',
+              ),
+            ),
+            payload: data['route']
+            // payload: data['route'],
+            );
+      }
+    });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       Map<String, dynamic> data = message.data;
+      var initializationSettingsAndroid =
+          AndroidInitializationSettings('flutter_devs');
+      var initSettings =
+          InitializationSettings(android: initializationSettingsAndroid);
+      flutterLocalNotificationsPlugin.initialize(initSettings,
+          onSelectNotification: (String? payload) async {
+        print("ini adalah id: ${data['anotherUserId']}");
+        print("ini adalah id: ${data['route']}");
+        print("ini adalah payload: $payload");
+        if (payload == "/another_account") {
+          navigatorKey.currentState!.pushNamed(AppRouter.anotherAccount,
+              arguments: data['anotherUserId']);
+          // Navigator.of(context, rootNavigator: true).pushNamed(AppRouter.anotherAccount, arguments: data['anotherUserId']);
+        }
+      });
+
       if (notification != null && android != null && !kIsWeb) {
         flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              // TODO add a proper drawable resource to android, for now using
-              //      one that already exists in example app.
-              icon: 'launch_background',
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                //      one that already exists in example app.
+                icon: 'launch_background',
+              ),
             ),
-          ),
-          payload: data['route']
-          // payload: data['route'],
-        );
-
-        Navigator.of(context).pushNamed('/notification');
+            payload: data['route']
+            // payload: data['route'],
+            );
       }
     });
   }
@@ -123,6 +179,12 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
     });
   }
 
+  Future onSelectNotification(String payload) async {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return AccountLain(anotherUserId: payload);
+    }));
+  }
+
   addData() async {
     UserProvider _userProvider = Provider.of(context, listen: false);
     await _userProvider.refreshUser();
@@ -132,9 +194,9 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   void initState() {
     super.initState();
     addData();
-
-    loadFCM();
-    listenFCM();
+    // loadFCM();
+    // listenFCM();
+    // setupFcm();
     setupToken();
   }
 
