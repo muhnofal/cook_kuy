@@ -459,7 +459,7 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
-                      maxLines: 5,
+                      maxLines: 1,
                       controller: recipeNameController,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(

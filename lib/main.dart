@@ -1,4 +1,5 @@
 import 'package:cook_kuy/providers/user_provider.dart';
+import 'package:cook_kuy/resources/fcm_service.dart';
 import 'package:cook_kuy/responsive/mobile_screen_layout.dart';
 import 'package:cook_kuy/responsive/responsive_layout_screen.dart';
 import 'package:cook_kuy/responsive/web_screen_layout.dart';
@@ -9,26 +10,44 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
-  print('Handling a background message ${message.messageId}');
-}
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // If you're going to use other Firebase services in the background, such as Firestore,
+//   // make sure you call `initializeApp` before using other Firebase services.
+//   await Firebase.initializeApp();
+//   print('Handling a background message ${message.messageId}');
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  // await flutterLocalNotificationsPlugin
+  //     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+class MyApp extends StatefulWidget {
+
   MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    setupFcm();
+  }
 
   // This widget is the root of your application.
   @override
