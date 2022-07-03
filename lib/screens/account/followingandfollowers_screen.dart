@@ -35,10 +35,10 @@ class _FollowingAndFollowersScreenState
             indicatorColor: ijoSkripsi,
             tabs: [
               Tab(
-                text: "Following",
+                text: "Followers",
               ),
               Tab(
-                text: "Followers",
+                text: "Following",
               )
             ],
           ),

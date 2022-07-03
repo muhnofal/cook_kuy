@@ -38,118 +38,126 @@ class _AccountHeaderState extends State<AccountHeader> {
             return Container();
           }
           final userData = snapshot.data;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(userData!['photoUrl']),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        userData['username'],
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+          return Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(userData!['photoUrl']),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            userData['username'],
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            userData['bio'],
+                          ),
+                        ],
                       ),
-                      Text(
-                        userData['bio'],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 45.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(
+                              AppRouter.followingandfollowers,
+                            );
+                          },
+                          child: FollowAndFollowingWidget(
+                            count: userData['followers'].length.toString(),
+                            labeltext: "Followers",
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      const SizedBox(
+                        height: 40,
+                        child: VerticalDivider(
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 45.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(
+                              AppRouter.followingandfollowers,
+                            );
+                          },
+                          child: FollowAndFollowingWidget(
+                            count: userData['following'].length.toString(),
+                            labeltext: "Following",
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 45.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context, rootNavigator: true).pushNamed(
-                          AppRouter.followingandfollowers,
-                        );
-                      },
-                      child: FollowAndFollowingWidget(
-                        count: userData['followers'].length.toString(),
-                        labeltext: "Followers",
-                      ),
-                    ),
-                  ),
                   const SizedBox(
-                    width: 25,
-                  ),
-                  const SizedBox(
-                    height: 40,
-                    child: VerticalDivider(
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 25,
+                    height: 10,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 45.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context, rootNavigator: true).pushNamed(
-                          AppRouter.followingandfollowers,
-                        );
-                      },
-                      child: FollowAndFollowingWidget(
-                        count: userData['following'].length.toString(),
-                        labeltext: "Following",
-                      ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(AppRouter.editProfile);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(7),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade400),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: const Text(
+                                "Edit Profile",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .pushNamed(AppRouter.editProfile);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Text(
-                            "Edit Profile",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           );
         });
   }

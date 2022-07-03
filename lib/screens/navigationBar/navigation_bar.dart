@@ -32,9 +32,9 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
   List<PersistentBottomNavBarItem> _navBarsItem() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.home_rounded),
+        icon: const Icon(Icons.home_outlined),
         title: ('Home'),
-        textStyle: TextStyle(fontSize: 10),
+        textStyle: const TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -46,7 +46,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.soup_kitchen_outlined),
         title: ('Cook'),
-        textStyle: TextStyle(fontSize: 10),
+        textStyle: const TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -58,7 +58,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.receipt_long_outlined),
         title: ('Create Recipe'),
-        textStyle: TextStyle(fontSize: 10),
+        textStyle: const TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -68,9 +68,9 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
         //ini masih ada yang harus ditambahkan
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.notifications),
+        icon: const Icon(Icons.notifications_none_outlined),
         title: ('Notification'),
-        textStyle: TextStyle(fontSize: 10),
+        textStyle: const TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(
@@ -82,7 +82,7 @@ class _NewNavigationScreenState extends State<NewNavigationScreen> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.person_outline_rounded),
         title: ('Account'),
-        textStyle: TextStyle(fontSize: 10),
+        textStyle: const TextStyle(fontSize: 10),
         activeColorPrimary: ijoSkripsi,
         inactiveColorPrimary: kuningSkripsi,
         routeAndNavigatorSettings: const RouteAndNavigatorSettings(

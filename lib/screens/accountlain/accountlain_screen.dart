@@ -34,6 +34,8 @@ class _AccountLainState extends State<AccountLain> {
               pinned: true,
               delegate: PersistentHeader(
                 child: const Material(
+                  color: Colors.white,
+                  elevation: 0,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Text(

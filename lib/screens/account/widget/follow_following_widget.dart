@@ -3,7 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class FollowAndFollowingWidget extends StatelessWidget {
-  const FollowAndFollowingWidget(
+const FollowAndFollowingWidget(
       {Key? key, required this.labeltext, required this.count})
       : super(key: key);
   final String labeltext;
