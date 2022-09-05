@@ -32,7 +32,6 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-
   MyApp({Key? key}) : super(key: key);
 
   @override
@@ -42,7 +41,6 @@ class MyApp extends StatefulWidget {
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();

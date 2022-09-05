@@ -12,6 +12,7 @@ class Recipe {
   final String uid;
   final DateTime datePublished;
   final List<String> favorite;
+  final String approvalStatus;
 
   Recipe({
     required this.name,
@@ -24,7 +25,8 @@ class Recipe {
     required this.step,
     required this.uid,
     required this.datePublished,
-    required this.favorite
+    required this.favorite,
+    required this.approvalStatus
   });
 
   static Recipe fromSnap(DocumentSnapshot snap) {
@@ -41,7 +43,8 @@ class Recipe {
       additionalIngre: snapshot['ingredients'],
       uid: snapshot['uid'],
       datePublished: snapshot['date_published'],
-      favorite: snapshot['favorite']
+      favorite: snapshot['favorite'],
+      approvalStatus: snapshot['approval_status']
     );
   }
 
@@ -56,6 +59,7 @@ class Recipe {
     "step": step,
     "uid": uid,
     "date_published": datePublished,
-    "favorite": favorite
+    "favorite": favorite,
+    "approval_status": approvalStatus
   };
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cook_kuy/model/comment.dart';
 import 'package:cook_kuy/model/user.dart';
 import 'package:cook_kuy/providers/user_provider.dart';
 import 'package:cook_kuy/resources/firestore_methods.dart';
@@ -12,6 +13,7 @@ import 'package:readmore/readmore.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final String recipeId;
+
   const RecipeDetailScreen({Key? key, required this.recipeId})
       : super(key: key);
 
@@ -30,6 +32,22 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   //       .get();
   //   userData = snap.data()!;
   //   setState(() {});
+  // }
+
+  PopupMenuItem<Comment> buildItem(Comment item) =>
+      PopupMenuItem(
+        value: item,
+        child: Text(item.text),
+      );
+
+  // void onSelected(BuildContext context, Comment item) {
+  //   switch (item) {
+  //     case const
+  //       ""
+  //   :
+  //   Text("asdsa");
+  //   break;
+  //   }
   // }
 
   getRecipe() async {
@@ -107,7 +125,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   Widget commentList(final snapshot) {
-    User user = Provider.of<UserProvider>(context).getUser;
+    User user = Provider
+        .of<UserProvider>(context)
+        .getUser;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('recipe')
@@ -128,79 +148,123 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
               itemBuilder: (context, index) {
                 final commentData = snapshot.data!.docs[index].data();
                 List likesCounter = commentData['likes'];
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage:
-                            NetworkImage(commentData['profile_pic']),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              commentData['name'].toString(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(commentData['text']),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                    onTap: () async {
-                                      await FirestoreMethods().likeComment(
-                                          widget.recipeId,
-                                          commentData['comment_id'],
-                                          commentData['uid'],
-                                          commentData['likes']);
-                                    },
-                                    child: Icon(
-                                      Icons.thumb_up,
-                                      color: likesCounter.contains(user.uid)
-                                          ? ijoSkripsi
-                                          : Colors.grey,
-                                    )),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  likesCounter.length.toString(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[600]),
-                                ),
-                                // const SizedBox(
-                                //   width: 10,
-                                // ),
-                                // Text(
-                                //   "Reply",
-                                //   style: TextStyle(
-                                //       fontSize: 16,
-                                //       fontWeight: FontWeight.bold,
-                                //       color: Colors.grey[600]),
-                                // )
-                              ],
-                            ),
-                          ],
+                return Stack(children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage:
+                          NetworkImage(commentData['profile_pic']),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                commentData['name'].toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(commentData['text']),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                      onTap: () async {
+                                        await FirestoreMethods().likeComment(
+                                            widget.recipeId,
+                                            commentData['comment_id'],
+                                            commentData['uid'],
+                                            commentData['likes']);
+                                      },
+                                      child: Icon(
+                                        Icons.thumb_up,
+                                        color: likesCounter.contains(user.uid)
+                                            ? ijoSkripsi
+                                            : Colors.grey,
+                                      )),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    likesCounter.length.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[600]),
+                                  ),
+                                  // const SizedBox(
+                                  //   width: 10,
+                                  // ),
+                                  // Text(
+                                  //   "Reply",
+                                  //   style: TextStyle(
+                                  //       fontSize: 16,
+                                  //       fontWeight: FontWeight.bold,
+                                  //       color: Colors.grey[600]),
+                                  // )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
+                  Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: PopupMenuButton(
+                      // onSelected: (item) => onSelected(context, item),
+                      // itemBuilder: (context) => [
+                      //   ...CommentItem.itemFirst.map(buildItem).toList(),
+                      // ],
+                      itemBuilder: (context) =>
+                      [
+                        const PopupMenuItem(
+                          child: Text("Report"),
+                          value: "Report",
+                        ),
+                      ],
+                      onSelected: (item) {
+                        setState(
+                              () {
+                            try {
+                              FirestoreMethods().commentReport(
+                                commentData['comment_id'],
+                                commentData['recipe_id'],
+                                commentData['profile_pic'],
+                                commentData['name'],
+                                commentData['uid'],
+                                commentData['text']
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("You report the comment"),
+                                  ));
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(e.toString()),
+                                  ));
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ]);
               },
-              separatorBuilder: (BuildContext context, int index) => Divider(
+              separatorBuilder: (BuildContext context, int index) =>
+                  Divider(
                     color: Colors.grey[200],
                     thickness: 3,
                   ),
@@ -209,7 +273,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   Widget commentBar(final snap) {
-    User user = Provider.of<UserProvider>(context).getUser;
+    User user = Provider
+        .of<UserProvider>(context)
+        .getUser;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Row(
@@ -270,7 +336,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             height: 350,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              separatorBuilder: (context, index) => const SizedBox(
+              separatorBuilder: (context, index) =>
+              const SizedBox(
                 width: 12,
               ),
               scrollDirection: Axis.horizontal,
@@ -401,63 +468,63 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                   //   height: 15,
                   // ),
                   Center(
-                      // child: RatingBar.builder(
-                      //   initialRating: 0,
-                      //   // minRating: 1,
-                      //   itemPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      //   direction: Axis.horizontal,
-                      //   itemSize: 50,
-                      //   itemBuilder: ((context, index) => const Icon(
-                      //         Icons.star,
-                      //         color: Colors.amber,
-                      //       )),
-                      //   onRatingUpdate: (rating) {
-                      //     print(rating);
-                      //   },
-                      // ),
+                    // child: RatingBar.builder(
+                    //   initialRating: 0,
+                    //   // minRating: 1,
+                    //   itemPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    //   direction: Axis.horizontal,
+                    //   itemSize: 50,
+                    //   itemBuilder: ((context, index) => const Icon(
+                    //         Icons.star,
+                    //         color: Colors.amber,
+                    //       )),
+                    //   onRatingUpdate: (rating) {
+                    //     print(rating);
+                    //   },
+                    // ),
                       child: favoriteList.contains(userProvider.getUser.uid)
                           ? SizedBox(
-                              width: double.infinity / 2,
-                              height: 50,
-                              child: ElevatedButton(
-                                child: const Text("Delete from favorite"),
-                                style: ElevatedButton.styleFrom(
-                                  primary: ijoSkripsi,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  await FirestoreMethods().addFavorite(
-                                      widget.recipeId,
-                                      userProvider.getUser.uid,
-                                      favoriteList);
-                                },
-                              ),
-                            )
+                        width: double.infinity / 2,
+                        height: 50,
+                        child: ElevatedButton(
+                          child: const Text("Delete from favorite"),
+                          style: ElevatedButton.styleFrom(
+                            primary: ijoSkripsi,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () async {
+                            await FirestoreMethods().addFavorite(
+                                widget.recipeId,
+                                userProvider.getUser.uid,
+                                favoriteList);
+                          },
+                        ),
+                      )
                           : SizedBox(
-                              width: double.infinity / 2,
-                              height: 50,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: const BorderSide(color: ijoSkripsi),
-                                  ),
-                                ),
-                                child: const Text(
-                                  "Add to favorite",
-                                  style: TextStyle(color: ijoSkripsi),
-                                ),
-                                onPressed: () async {
-                                  await FirestoreMethods().addFavorite(
-                                      widget.recipeId,
-                                      userProvider.getUser.uid,
-                                      favoriteList);
-                                },
-                              ),
-                            )),
+                        width: double.infinity / 2,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(color: ijoSkripsi),
+                            ),
+                          ),
+                          child: const Text(
+                            "Add to favorite",
+                            style: TextStyle(color: ijoSkripsi),
+                          ),
+                          onPressed: () async {
+                            await FirestoreMethods().addFavorite(
+                                widget.recipeId,
+                                userProvider.getUser.uid,
+                                favoriteList);
+                          },
+                        ),
+                      )),
                 ],
               ),
             ),
@@ -498,7 +565,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                         .doc(userId)
                         .snapshots(),
                     builder: (context, userSnap) {
-                      if(!userSnap.hasData){
+                      if (!userSnap.hasData) {
                         return Container();
                       }
                       final userData = userSnap.data;
@@ -508,12 +575,12 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                             onTap: () {
                               Navigator.of(context, rootNavigator: true)
                                   .pushNamed(AppRouter.anotherAccount,
-                                      arguments: userData!['uid']);
+                                  arguments: userData!['uid']);
                             },
                             child: CircleAvatar(
                               radius: 30,
                               backgroundImage:
-                                  NetworkImage(userData!['photoUrl']),
+                              NetworkImage(userData!['photoUrl']),
                             ),
                           ),
                           const SizedBox(
@@ -552,7 +619,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                                 child: Icon(Icons.favorite,
                                     size: 45,
                                     color: likeList
-                                            .contains(userProvider.getUser.uid)
+                                        .contains(userProvider.getUser.uid)
                                         ? ijoSkripsi
                                         : Colors.grey[400]),
                               ),
@@ -624,12 +691,15 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         });
   }
 
-  void showCommentField() => showModalBottomSheet(
+  void showCommentField() =>
+      showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
           final MediaQueryData mediaQueryData = MediaQuery.of(context);
-          final User user = Provider.of<UserProvider>(context).getUser;
+          final User user = Provider
+              .of<UserProvider>(context)
+              .getUser;
           return Padding(
             // padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
             padding: mediaQueryData.viewInsets,
@@ -644,7 +714,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                 minLines: 1,
                 decoration: InputDecoration(
                   contentPadding:
-                      const EdgeInsets.fromLTRB(10, 10.0, 20.0, 10.0),
+                  const EdgeInsets.fromLTRB(10, 10.0, 20.0, 10.0),
                   hintText: "What do you think...?",
                   hintStyle: TextStyle(
                     color: Colors.grey[600],
@@ -663,7 +733,9 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                       _commentController.text,
                       user.uid,
                       user.username,
-                      user.photoUrl, [], 'comment');
+                      user.photoUrl,
+                      [],
+                      'comment');
                   _commentController.clear();
                   Navigator.pop(context);
                 },

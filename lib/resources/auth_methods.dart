@@ -23,7 +23,8 @@ class AuthMethods {
       {required String email,
       required String password,
       required String username,
-      required String imageFile}) async {
+      required String imageFile,
+      required String role}) async {
     String res = "Some error occured";
     try {
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
@@ -39,6 +40,7 @@ class AuthMethods {
 
         model.User user = model.User(
           username: username,
+          role: role,
           uid: credential.user!.uid,
           email: email,
           followers: [],

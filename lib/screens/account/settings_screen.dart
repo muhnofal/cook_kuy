@@ -1,3 +1,4 @@
+import 'package:cook_kuy/screens/login/login_screen.dart';
 import 'package:cook_kuy/screens/router.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,19 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  var userStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    setUserStatus();
+  }
+
+  Future<void> setUserStatus() async {
+    userStatus = FirebaseAuth.instance.currentUser;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +69,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () {
                 setState(() {
                   FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushNamed(AppRouter.login);
+                  setUserStatus();
+                  // Navigator.of(context, rootNavigator: true).pushNamed(AppRouter.login);
+                  Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                      (route) => false);
                 });
               },
               child: Row(
@@ -68,6 +87,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: 10,
                   ),
                   Text("Log out")
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  Navigator.of(context, rootNavigator: true).pushNamed(AppRouter.approvalMenu);
+                });
+              },
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.approval,
+                    color: ijoSkripsi,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Approval Menu")
                 ],
               ),
             ),

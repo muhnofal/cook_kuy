@@ -333,7 +333,7 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
     }
 
     try {
-      String res = await FirestoreMethods().uploadRecipe(
+      String res = await FirestoreMethods().uploadToApproval(
           recipeNameController.text,
           recipeDescriptionController.text,
           mainIngreController.text,
@@ -342,13 +342,14 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
           [],
           stepBystepList,
           [],
-          uid,);
+          uid,
+          "Pending");
       if (res == "success") {
         setState(() {
           isLoading = false;
           stopLoading(context);
         });
-        showSnackBar('Success to upload recipe', context);
+        showSnackBar('Success to upload recipe, please check on approval menu', context);
         clearForm();
       } else {
         showSnackBar(res, context);

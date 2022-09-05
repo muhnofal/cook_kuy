@@ -2,6 +2,11 @@ import 'package:cook_kuy/screens/account/account_screen.dart';
 import 'package:cook_kuy/screens/account/editprofile_screen.dart';
 import 'package:cook_kuy/screens/account/followingandfollowers_screen.dart';
 import 'package:cook_kuy/screens/accountlain/accountlain_screen.dart';
+import 'package:cook_kuy/screens/admin/admin_comment_report.dart';
+import 'package:cook_kuy/screens/admin/approval_admin.dart';
+import 'package:cook_kuy/screens/admin/approval_detail_admin.dart';
+import 'package:cook_kuy/screens/approval/approval_detail_screen.dart';
+import 'package:cook_kuy/screens/approval/approval_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/additional_ingre_screen.dart';
 import 'package:cook_kuy/screens/createRecipe/create_recipe_screen.dart';
 import 'package:cook_kuy/screens/cookScreen/cook_screen.dart';
@@ -18,8 +23,8 @@ import 'package:flutter/material.dart';
 class AppRouter {
   static const home = '/';
   static const searchUsers = '/search_users';
-  static const login = 'login';
-  static const register = 'register';
+  static const login = '/login';
+  static const register = '/register';
   static const createRecipe = '/create_recipe';
   static const cook = '/cook';
   static const account = '/account';
@@ -32,6 +37,11 @@ class AppRouter {
   static const anotherAccount = '/another_account';
   static const editProfile = '/edit_profile';
   static const notification = '/notification';
+  static const approvalAdmin = '/approval_admin';
+  static const approvalDetailAdmin = '/approval_detail_admin';
+  static const searchRecipeAdmin = '/search_recipe_admin';
+  static const approvalMenu = '/approval_menu';
+  static const approvalDetail = '/approval_detail';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -80,6 +90,24 @@ class AppRouter {
             builder: (_) => AccountLain(
                   anotherUserId: args,
                 ));
+      case approvalAdmin:
+        return MaterialPageRoute(builder: (_) => const ApprovalAdmin());
+      case approvalMenu:
+        return MaterialPageRoute(builder: (_) => const ApprovalScreen());
+      case approvalDetail:
+        var args = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => ApprovalDetailScreen(
+                  recipeId: args,
+                ));
+      case approvalDetailAdmin:
+        var args = routeSettings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => ApprovalDetailAdmin(
+                  recipeId: args,
+                ));
+      case searchRecipeAdmin:
+        return MaterialPageRoute(builder: (_) => const AdminCommentReport());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

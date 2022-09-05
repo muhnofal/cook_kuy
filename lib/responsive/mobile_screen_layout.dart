@@ -1,4 +1,4 @@
-import 'package:cook_kuy/screens/navigationBar/navigation_bar.dart';
+import 'package:cook_kuy/screens/admin/admin_check.dart';
 import 'package:flutter/material.dart';
 
 class MobileScreenLayout extends StatelessWidget {
@@ -8,7 +8,8 @@ class MobileScreenLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: NewNavigationScreen(),
+        // child: NewNavigationScreen(),
+        child: AdminCheck(),
       ),
     );
   }

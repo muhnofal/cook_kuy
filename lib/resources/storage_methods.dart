@@ -40,4 +40,23 @@ class StorageMethods {
     print(imagesUrl);
     return imagesUrl;
   }
+
+  Future<String> uploadImageToStorage2(
+      String childName, Uint8List file, bool isPost) async {
+    Reference reference =
+    _storage.ref().child(childName).child(_auth.currentUser!.uid);
+
+    if(isPost){
+      String id = const Uuid().v1();
+      reference = reference.child(id);
+    }
+
+    UploadTask uploadTask = reference.putData(file);
+
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
+
 }

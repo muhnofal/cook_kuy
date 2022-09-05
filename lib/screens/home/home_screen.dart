@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cook_kuy/providers/user_provider.dart';
 import 'package:cook_kuy/screens/card/home_following_card.dart';
 import 'package:cook_kuy/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:provider/provider.dart';
-import 'package:readmore/readmore.dart';
 
 import '../router.dart';
 
